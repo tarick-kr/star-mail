@@ -17,18 +17,7 @@
         />
       </v-toolbar-title>
       <v-spacer />
-      <v-btn
-        class="ma-2"
-        small
-        fab
-      >
-        <v-avatar>
-          <img
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
-            alt="John"
-          >
-        </v-avatar>
-      </v-btn>
+      <AppToolbarBtn />
     </v-app-bar>
     <v-app-bar
       v-if="toolbarBottom"
@@ -43,31 +32,41 @@
     >
       <v-toolbar-title>
         <v-app-bar-nav-icon
+          tile
+          text
+          height="64"
           large
+          class="nav-icon"
           @click.stop="toggleDrawer()"
         />
       </v-toolbar-title>
       <v-spacer />
       <v-btn
-        class="ma-2"
-        small
+        class="mb-12"
         fab
+        dark
+        large
+        color="#FFAD00"
+        elevation="12"
       >
-        <v-avatar>
-          <img
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
-            alt="John"
-          >
-        </v-avatar>
+        <v-icon dark>
+          mdi-pencil
+        </v-icon>
       </v-btn>
+      <v-spacer />
+      <AppToolbarBtn />
     </v-app-bar>
   </div>
 </template>
+
 <script>
+import AppToolbarBtn from '@/components/AppToolbarBtn';
 
 export default {
   name: 'AppToolbar',
-  components: {},
+  components: {
+    AppToolbarBtn,
+  },
   props: {
     windowWidth: {
       type: Number,
@@ -77,6 +76,7 @@ export default {
   data: () => ({
     toolbarTop: true,
     toolbarBottom: false,
+    isAuthenticated: true,
   }),
   watch: {
     windowWidth(val) {
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     toggleDrawer() {
-      this.$store.commit('TOGGLE_DRAWER');
+      this.$store.commit('TOGGLE_STATE_DRAWER');
     },
   },
 };
@@ -100,4 +100,8 @@ export default {
   ::v-deep .v-toolbar__content
     padding-top: 0
     padding-bottom: 0
+
+  .nav-icon
+    width: 64px
+    margin-left: -16px
 </style>

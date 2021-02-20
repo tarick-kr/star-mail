@@ -121,7 +121,7 @@
             text
             block
             height="64px"
-            @click="drawerMini=!drawerMini"
+            @click="toggleDrawerMini(false)"
           >
             <v-icon>mdi-chevron-double-right </v-icon>
           </v-btn>
@@ -131,7 +131,7 @@
             text
             block
             height="64px"
-            @click="drawerMini=!drawerMini"
+            @click="toggleDrawerMini(true)"
           >
             <v-icon>mdi-chevron-double-left </v-icon>
           </v-btn>
@@ -171,11 +171,13 @@
     </v-navigation-drawer>
   </client-only>
 </template>
+
 <script>
+
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AppDrawer',
-  components: {},
   props: {
     windowWidth: {
       type: Number,
@@ -183,16 +185,18 @@ export default {
     },
   },
   data: () => ({
-    drawerMini: false,
-    drawerToggleBtn: false,
+
   }),
   computed: {
+    ...mapGetters({
+      drawerMini: 'stateDrawerMini',
+    }),
     drawer: {
       get() {
-        return this.$store.state.drawer;
+        return this.$store.getters.stateDrawer;
       },
       set(val) {
-        this.$store.commit('DRAWER', val);
+        this.$store.commit('SET_STATE_DRAWER', val);
       },
     },
     drawerMenuTop() {
@@ -230,29 +234,36 @@ export default {
         },
       ];
     },
-  },
-  watch: {
-    windowWidth(val) {
-      this.drawerMini = val <= 1264;
-      this.drawerToggleBtn = val <= 1264;
+    drawerToggleBtn() {
+      return this.windowWidth < 1264;
     },
   },
-  beforeMount() {
-    this.drawerMini = this.windowWidth <= 1264;
-    this.drawerToggleBtn = this.windowWidth <= 1264;
+  created() {
+    this.initDrawer();
   },
-  methods: {
 
+  methods: {
+    toggleDrawerMini(val) {
+      this.$store.commit('SET_STATE_DRAWER_MINI', val);
+    },
+    initDrawer() {
+      if (this.windowWidth < 600) {
+        this.$store.commit('SET_STATE_DRAWER', false);
+        this.$store.commit('SET_STATE_DRAWER_MINI', true);
+      } else if (this.windowWidth >= 600 && this.windowWidth < 1264) {
+        this.$store.commit('SET_STATE_DRAWER', true);
+        this.$store.commit('SET_STATE_DRAWER_MINI', true);
+      } else {
+        this.$store.commit('SET_STATE_DRAWER', true);
+        this.$store.commit('SET_STATE_DRAWER_MINI', false);
+      }
+    },
   },
 };
 </script>
 
 <style lang="sass">
   #appDrawer
-    //.drawer-toolbar
-    //  width: 100px
-    //  ::v-deep.v-toolbar__content
-    //    padding: 0
     .drawer-angle-btn
       position: absolute
       height: 64px

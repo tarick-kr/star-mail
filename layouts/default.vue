@@ -31,9 +31,10 @@ export default {
     windowWidth: 0,
   }),
   computed: {
+
   },
   beforeMount() {
-    this.onResize();
+    this.windowWidth = window.innerWidth;
   },
   methods: {
     onResize() {

@@ -25,7 +25,9 @@ module.exports = {
       code: 160,
       template: 160,
     }],
-    'no-shadow': ['error', { builtinGlobals: false, hoist: 'functions', allow: [] }],
+    'no-shadow': 0,
+    'no-param-reassign': 'off',
+    'no-console': 'off',
   },
   settings: {
     'import/resolver': {
