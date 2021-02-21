@@ -125,7 +125,7 @@
             <v-list-item
               v-else-if="item.click"
               :key="item.title"
-              :style="`display: ${displayBtnFullscreen}`"
+              :style="`display: ${displayBtnFullscreen}; text-align: center;`"
               @click="handleFullScreen()"
             >
               <v-list-item-icon>
