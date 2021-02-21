@@ -31,7 +31,7 @@
 export default {
   name: 'AppToolbarBtn',
   data: () => ({
-    isAuthenticated: true,
+    isAuthenticated: false,
   }),
 };
 </script>
