@@ -47,7 +47,6 @@ const randomElement = (arr = []) => arr[Math.floor(Math.random() * arr.length)];
 const kebab = (str) => (str || '').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
 const toggleFullScreen = () => {
-  console.log('util toggleFullScreen');
   const doc = window.document;
   const docEl = doc.documentElement;
 

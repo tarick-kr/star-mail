@@ -11,6 +11,7 @@
       class="appDrawer"
       color="#224955"
     >
+      <!--  Логотип  -->
       <v-app-bar
         height="64"
         dark
@@ -50,7 +51,7 @@
           </nuxt-link>
         </div>
       </v-app-bar>
-
+      <!--  Кнопка "Создать сообщение"  -->
       <div
         v-if="!drawerBtnCreateHidden"
         class="center-flex-column drawer-wrapper-btn"
@@ -90,17 +91,17 @@
         v-else
         style="margin-top: 64px;"
       />
-
+      <!--  Меню  -->
       <div
         class="drawer-wrapper-content"
         :style="`height: ${heightWrapperContent}px;`"
       >
         <v-divider />
         <v-list class="pa-0">
-          <template v-for="(item, i) in drawerMenuTop">
+          <template v-for="(item) in drawerMenuTop">
             <v-list-item
               v-if="item.name"
-              :key="item.name"
+              :key="item.title"
               :to="item.href ? item.href : null"
             >
               <v-list-item-icon>
@@ -118,17 +119,38 @@
             </v-list-item>
             <v-divider
               v-else-if="item.divider"
-              :key="i"
+              :key="item.title"
+              :style="item.hiddenSmDevice && displayBtnFullscreen === 'none' ? 'display: none;' : 'display: block;'"
             />
+            <v-list-item
+              v-else-if="item.click"
+              :key="item.title"
+              :style="`display: ${displayBtnFullscreen}`"
+              @click="handleFullScreen()"
+            >
+              <v-list-item-icon>
+                <v-icon>
+                  {{ screenIcon }}
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span>
+                    {{ titleFullScreen }}
+                  </span>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
           </template>
         </v-list>
+
         <div v-if="drawerToggleBtn">
           <v-btn
             v-if="drawerMini"
             tile
             text
             block
-            class="drawer-angle-btn"
+            class="drawer-toggle-btn"
             @click="toggleDrawerMini(false)"
           >
             <v-icon>mdi-chevron-double-right </v-icon>
@@ -138,7 +160,7 @@
             tile
             text
             block
-            class="drawer-angle-btn"
+            class="drawer-toggle-btn"
             @click="toggleDrawerMini(true)"
           >
             <v-icon>mdi-chevron-double-left </v-icon>
@@ -183,6 +205,7 @@
 <script>
 
 import { mapGetters } from 'vuex';
+import Util from '@/util';
 
 export default {
   name: 'AppDrawer',
@@ -196,7 +219,10 @@ export default {
       required: true,
     },
   },
-  data: () => ({ }),
+  data: () => ({
+    screenIcon: 'mdi-fullscreen',
+    titleFullScreen: 'Развернуть',
+  }),
   computed: {
     ...mapGetters({
       drawerMini: 'stateDrawerMini',
@@ -223,14 +249,29 @@ export default {
           name: 'Users',
           href: '/templates',
         },
-        { divider: true },
+        {
+          title: 'Разделитель-1',
+          divider: true,
+        },
         {
           title: 'Профиль',
           icon: 'mdi-account-cog',
           name: 'Profile',
           href: '/profile',
         },
-        { divider: true },
+        {
+          title: 'Разделитель-2',
+          divider: true,
+        },
+        {
+          title: 'fullscreen',
+          click: true,
+        },
+        {
+          title: 'Разделитель-3',
+          divider: true,
+          hiddenSmDevice: true,
+        },
       ];
     },
     drawerMenuBottom() {
@@ -252,6 +293,9 @@ export default {
     },
     heightWrapperContent() {
       return this.drawerBtnCreateHidden ? this.windowHeight - 64 : this.windowHeight - 64 - 150;
+    },
+    displayBtnFullscreen() {
+      return this.windowHeight <= 600 || this.windowWidth <= 600 ? 'block' : 'none';
     },
   },
   watch: {
@@ -282,6 +326,16 @@ export default {
         this.$store.commit('SET_STATE_DRAWER', true);
         this.$store.commit('SET_STATE_DRAWER_MINI', false);
       }
+    },
+    handleFullScreen() {
+      if (this.screenIcon === 'mdi-fullscreen') {
+        this.titleFullScreen = 'Свернуть';
+        this.screenIcon = 'mdi-fullscreen-exit';
+      } else {
+        this.titleFullScreen = 'Развернуть';
+        this.screenIcon = 'mdi-fullscreen';
+      }
+      Util.toggleFullScreen();
     },
   },
 };
@@ -335,7 +389,10 @@ export default {
       display: flex
       flex-direction: column
       justify-content: space-between
-      .drawer-angle-btn
+      .full-screen-btn
+        width: 56px
+        height: 64px
+      .drawer-toggle-btn
         height: 56px
 
 </style>
