@@ -125,7 +125,7 @@
             <v-list-item
               v-else-if="item.click"
               :key="item.title"
-              :style="`display: ${displayBtnFullscreen}; text-align: center;`"
+              :style="`display: ${displayBtnFullscreen};`"
               @click="handleFullScreen()"
             >
               <v-list-item-icon>
@@ -295,7 +295,7 @@ export default {
       return this.drawerBtnCreateHidden ? this.windowHeight - 64 : this.windowHeight - 64 - 150;
     },
     displayBtnFullscreen() {
-      return this.windowHeight <= 600 || this.windowWidth <= 600 ? 'block' : 'none';
+      return this.windowHeight <= 600 || this.windowWidth <= 600 ? 'flex' : 'none';
     },
   },
   watch: {
