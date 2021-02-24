@@ -5,10 +5,11 @@ module.exports = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'airbnb-base',
-    'plugin:vue/essential',
-    'plugin:vue/vue3-recommended',
+    // 'eslint:recommended',
+    // 'airbnb-base',
+    // 'plugin:vue/essential',
+    // 'plugin:vue/vue3-recommended',
+    'plugin:nuxt/base',
     'plugin:nuxt/recommended',
   ],
   parser: 'vue-eslint-parser',
@@ -28,6 +29,8 @@ module.exports = {
     'no-shadow': 0,
     'no-param-reassign': 'off',
     'no-console': 'off',
+    'no-cjs-in-config': 'off',
+    'global-require': 'off',
   },
   settings: {
     'import/resolver': {
