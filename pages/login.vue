@@ -3,16 +3,17 @@
     <v-container class="center-flex height-wrapper">
       <transition appear appear-active-class="content-appear">
         <v-card
-        class="pa-5"
         color="#224955"
         dark
         max-width="400"
         outlined
+        class="card-wrapper"
       >
         <div class="wrapper-logo">
           <img src="../static/app_logo_accent.svg" alt="s.tar.mail" height="50">
         </div>
         <form
+          class="form"
           @submit.prevent="submit"
         >
           <v-text-field
@@ -144,20 +145,37 @@ export default {
   .login-page
     .height-wrapper
       height: calc(100vh - 64px)
-      .wrapper-logo
-        height: 50px
-        margin-bottom: 50px
-        padding: 0 50px
-      .btn-line
-        display: flex
-        justify-content: space-between
-        align-items: center
-        margin-right: -16px
-        .link
-          color: rgba(255, 255, 255, 0.75)
-          span
-            font-size: 13px
-            letter-spacing: 1px
+      .card-wrapper
+        max-width: 300px
+        .wrapper-logo
+          text-align: center
+          margin-bottom: 50px
+          img
+            width: 100%
+        .form
+          padding: 0 40px
+          .btn-line
+            display: flex
+            justify-content: space-between
+            align-items: center
+            margin-right: -16px
+            .link
+              color: rgba(255, 255, 255, 0.75)
+              span
+                font-size: 13px
+                letter-spacing: 1px
+
+  @media screen and (max-width: 500px)
+    .login-page
+      .height-wrapper
+        .card-wrapper
+          max-width: 300px
+          .wrapper-logo
+            margin-bottom: 30px
+            img
+              width: 60%
+          .form
+            padding: 0 24px
 
 
 </style>
