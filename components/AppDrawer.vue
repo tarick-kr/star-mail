@@ -10,6 +10,7 @@
       dark
       class="appDrawer"
       color="#224955"
+      :class="elevationDrawer ? 'elevation-drawer' : '' "
     >
       <!--  Логотип  -->
       <v-app-bar
@@ -297,6 +298,9 @@ export default {
     displayBtnFullscreen() {
       return this.windowHeight <= 600 || this.windowWidth <= 600 ? 'flex' : 'none';
     },
+    elevationDrawer() {
+      return this.drawer && !this.drawerMini && this.windowWidth >= 600 && this.windowWidth < 1264
+    }
   },
   watch: {
     windowWidth(newVal, val) {
@@ -394,5 +398,8 @@ export default {
         height: 64px
       .drawer-toggle-btn
         height: 56px
+
+  .elevation-drawer
+    box-shadow: 4px 0 5px -2px rgba(0, 0, 0, 0.2), 7px 0 10px 1px rgba(0, 0, 0, 0.14), 2px 0 16px 1px rgba(0, 0, 0, 0.12) !important
 
 </style>

@@ -6,10 +6,6 @@
     <v-app
       class="app"
     >
-      <!--      <AppToolbarFullScreenBtn-->
-      <!--        :window-width="windowWidth"-->
-      <!--        class="hidden-sm-and-up"-->
-      <!--      />-->
       <app-drawer
         :window-width="windowWidth"
         :window-height="windowHeight"
@@ -17,6 +13,7 @@
       <app-toolbar
         :window-width="windowWidth"
         :window-height="windowHeight"
+        :elevationAppToolbar="elevationAppToolbar"
       />
       <v-fab-transition v-if="floatingBtnCreateShow">
         <v-btn
@@ -31,9 +28,7 @@
           </v-icon>
         </v-btn>
       </v-fab-transition>
-      <v-main
-        class="page-wrapper"
-      >
+      <v-main>
         <nuxt />
       </v-main>
     </v-app>
@@ -43,6 +38,7 @@
 <script>
 import AppDrawer from '@/components/AppDrawer';
 import AppToolbar from '@/components/AppToolbar';
+import {mapGetters} from "vuex";
 
 export default {
   name: 'Default',
@@ -55,9 +51,15 @@ export default {
     windowHeight: window.innerHeight,
   }),
   computed: {
+    ...mapGetters({
+      offsetTop: 'offsetTop'
+    }),
     floatingBtnCreateShow() {
       return this.windowWidth >= 600 && this.windowWidth < 1264 && this.windowHeight <= 450;
     },
+    elevationAppToolbar() {
+      return this.offsetTop > 5
+    }
   },
   beforeMount() {
     this.windowWidth = window.innerWidth;
@@ -80,9 +82,4 @@ export default {
       position: fixed
       z-index: 999
 
-  //.page-enter-active, .page-leave-active
-  //  transition: opacity 0.4s
-  //
-  //.page-enter, .page-leave-active
-  //  opacity: 0
 </style>

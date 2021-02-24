@@ -6,7 +6,8 @@
     height="64"
     :color="isAuthenticated ? '#FFAD00' : 'white'"
     class="btn-toolbar px-0"
-    @click.stop="isAuthenticated=!isAuthenticated"
+    :to="!isAuthenticated ? '/login' : '/'"
+    @click.stop="isAuthenticated = !isAuthenticated"
   >
     <div class="center-flex-column">
       <v-icon v-if="isAuthenticated">
@@ -33,6 +34,9 @@ export default {
   data: () => ({
     isAuthenticated: false,
   }),
+  methods: {
+
+  }
 };
 </script>
 

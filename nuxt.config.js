@@ -1,7 +1,7 @@
 // import colors from 'vuetify/es5/util/colors';
 
 module.exports = {
-  mode: 'spa',
+  ssr: false,
   head: {
     titleTemplate: '%s - star-mail',
     title: 'star-mail',
@@ -25,6 +25,7 @@ module.exports = {
   ],
 
   plugins: [
+    '@/plugins/vuelidate',
   ],
 
   components: true,
@@ -67,5 +68,6 @@ module.exports = {
   },
 
   build: {
+
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="login-page wrapper-main">
-    <v-container class="center-flex height-wrapper">
+    <v-container fluid class="center-flex height-wrapper">
       <transition appear appear-active-class="content-appear">
         <v-card
         class="pa-5"
@@ -16,9 +16,18 @@
           @submit.prevent="submit"
         >
           <v-text-field
+            v-model.trim="name"
+            :error-messages="nameErrors"
+            label="Введите имя"
+            append-icon="mdi-account"
+            required
+            @input="$v.name.$touch()"
+            @blur="$v.name.$touch()"
+          />
+          <v-text-field
             v-model.trim="email"
             :error-messages="emailErrors"
-            label="E-mail"
+            label="Укажите e-mail"
             append-icon="mdi-email"
             required
             @input="$v.email.$touch()"
@@ -26,32 +35,35 @@
           />
           <v-text-field
             v-model.trim="password"
-            class="mb-6"
             :error-messages="passwordErrors"
-            label="Пароль"
+            label="Введите пароль"
             type="password"
             append-icon="mdi-lock"
             required
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
           />
+          <v-text-field
+            v-model.trim="rePassword"
+            class="mb-6"
+            :error-messages="rePasswordErrors"
+            label="Повторите пароль"
+            type="password"
+            append-icon="mdi-lock"
+            required
+            @input="$v.rePassword.$touch()"
+            @blur="$v.rePassword.$touch()"
+          />
           <div class="btn-line">
-            <nuxt-link
-              class="link"
-              to="/registration"
-            >
-            <span>
-              зарегистрироваться
-            </span>
-            </nuxt-link>
             <v-btn
               tile
               text
               color="#FFFFFF"
               :loading="loading"
+              :disabled="this.$v.$invalid"
               @click="submit"
             >
-              Войти
+              Подтвердить
             </v-btn>
           </div>
         </form>
@@ -62,27 +74,48 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, sameAs, minLength } from 'vuelidate/lib/validators'
+import moment from 'moment'
 
 export default {
   layout: 'default',
   mixins: [validationMixin],
   data () {
     return {
+      name: '',
       email: '',
       password: '',
+      rePassword: '',
       loading: false
     }
   },
   validations: {
+    name: { required },
     email: {
       required,
       email
     },
-    password: { required }
+    password: {
+      required,
+      minLength: minLength(6)
+    },
+    rePassword: { sameAs: sameAs('password') }
   },
   computed: {
+    ...mapGetters({
+      // adminEmail: 'adminProfile/adminEmail'
+    }),
+    nameErrors () {
+      const errors = []
+      if (!this.$v.name.$dirty) {
+        return errors
+      }
+      // !this.$v.name.maxLength && errors.push('Имя не может превышать 12 символов')
+      !this.$v.name.required && errors.push('Поле не может быть пустым')
+      return errors
+    },
     emailErrors () {
       const errors = []
       if (!this.$v.email.$dirty) {
@@ -98,33 +131,36 @@ export default {
         return errors
       }
       // !this.$v.password.alphaNum && errors.push('Пароль может состоять из цифр и латиницы')
+      !this.$v.password.minLength && errors.push('Пароль не может быть короче 6 символов')
       !this.$v.password.required && errors.push('Поле не может быть пустым')
       return errors
-    }
-  },
-  mounted () {
-    const { message } = this.$route.query
-    if (message === 'login') {
-      const message = {
-        text: 'Для начала войдите или зарегистрируйтесь',
-        color: '#F57F17'
+    },
+    rePasswordErrors () {
+      const errors = []
+      if (!this.$v.rePassword.$dirty) {
+        return errors
       }
-      this.$store.dispatch('SET_MESSAGE', message)
+      !this.$v.rePassword.sameAs && errors.push('Пароли должны совпадать')
+      return errors
     }
   },
   methods: {
     async submit () {
-      const { page } = this.$route.query
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.loading = true
         try {
           const formData = {
+            date: moment().format('DD.MM.YYYY HH:mm'),
+            name: this.name,
             email: this.email,
-            password: this.password
+            password: this.password,
           }
+          await this.$store.dispatch('authUser/ADD_USER', formData)
           await this.$store.dispatch('authUser/LOGIN_USER', formData)
-          page === 'super' ? await this.$router.push('/calcs/calc-super') : await this.$router.push('/')
+          await this.$router.push('/?message=registration')
+          await this.$store.dispatch('user/SEND_REGISTR_EMAIL', formData)
+          // await this.$router.push('/?message=registration')
           this.loading = false
         } catch (e) {
           this.loading = false
@@ -150,7 +186,7 @@ export default {
         padding: 0 50px
       .btn-line
         display: flex
-        justify-content: space-between
+        justify-content: flex-end
         align-items: center
         margin-right: -16px
         .link

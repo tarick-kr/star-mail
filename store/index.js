@@ -2,6 +2,7 @@ export const state = () => ({
   drawer: true,
   drawerMini: false,
   fullScreen: false,
+  offsetTop: 0,
 });
 
 export const mutations = {
@@ -15,8 +16,10 @@ export const mutations = {
     state.drawerMini = val;
   },
   INIT_FULL_SCREEN(state, val) {
-    console.log('INIT_FULL_SCREEN');
     state.fullScreen = val;
+  },
+  OFFSET_TOP(state, val) {
+    state.offsetTop = val;
   },
 };
 
@@ -31,7 +34,8 @@ export const actions = {
 };
 
 export const getters = {
-  stateDrawer: (state) => state.drawer,
-  stateDrawerMini: (state) => state.drawerMini,
-  fullScreen: (state) => state.fullScreen,
+  stateDrawer: ({drawer}) => drawer,
+  stateDrawerMini: ({drawerMini}) => drawerMini,
+  fullScreen: ({fullScreen}) => fullScreen,
+  offsetTop: ({offsetTop}) => offsetTop,
 };
