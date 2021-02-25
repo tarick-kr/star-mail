@@ -3,7 +3,7 @@
     <v-container id="scrollWrapper" class="overflow-y-auto" fluid>
       <transition appear appear-active-class="content-appear">
         <div v-scroll:#scrollWrapper="onScroll">
-          <template v-if="fetching">
+          <template v-if="!fetching">
             <div class="pt-6 px-5 pb-3">
               <h2>Мои сообщения</h2>
             </div>
