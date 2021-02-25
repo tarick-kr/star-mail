@@ -3,7 +3,8 @@ export const state = () => ({
   drawerMini: false,
   fullScreen: false,
   offsetTop: 0,
-  isSmallDeviceLandscape: false
+  isSmallDeviceLandscape: false,
+  message: null,
 });
 
 export const mutations = {
@@ -24,10 +25,20 @@ export const mutations = {
   },
   IS_SMALL_DEVICE_LANDSCAPE(state, val) {
     state.isSmallDeviceLandscape = val
-  }
+  },
+  SET_MESSAGE (state, message) {
+    state.message = message
+  },
+  CLEAR_MESSAGE (state) {
+    state.message = null
+  },
  };
 
 export const actions = {
+  nuxtServerInit ({ dispatch }) {
+    console.log('nuxtServerInit')
+    dispatch('auth/AUTO_LOGIN')
+  },
   INIT_FULL_SCREEN({ commit }, winWidth) {
     if (winWidth < 600) {
       commit('INIT_FULL_SCREEN', true);
@@ -43,4 +54,5 @@ export const getters = {
   fullScreen: ({fullScreen}) => fullScreen,
   offsetTop: ({offsetTop}) => offsetTop,
   isSmallDeviceLandscape: ({isSmallDeviceLandscape}) => isSmallDeviceLandscape,
+  message: ({message}) => message,
 };

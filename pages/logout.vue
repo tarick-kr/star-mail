@@ -9,10 +9,23 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   layout: 'default',
+  computed: {
+    ...mapGetters({
+      isAuthenticatedUser: 'auth/isAuthenticatedUser'
+    })
+  },
   created() {
     this.$store.commit('OFFSET_TOP', 0)
+  },
+  beforeMount () {
+    if (this.isAuthenticatedUser) {
+      this.$store.dispatch('auth/LOGOUT_USER')
+      this.$router.push('/')
+    }
   }
 }
 </script>

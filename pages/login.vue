@@ -75,9 +75,7 @@ export default {
     return {
       email: '',
       password: '',
-      loading: false,
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
+      loading: false
     }
   },
   validations: {
@@ -111,18 +109,18 @@ export default {
     },
   },
   mounted () {
-    // const { message } = this.$route.query
-    // if (message === 'login') {
-    //   const message = {
-    //     text: 'Для начала войдите или зарегистрируйтесь',
-    //     color: '#F57F17'
-    //   }
-    //   this.$store.dispatch('SET_MESSAGE', message)
-    // }
+    const { message } = this.$route.query
+    if (message === 'login') {
+      const message = {
+        text: 'Для начала войдите или зарегистрируйтесь',
+        color: '#F57F17'
+      }
+      this.$store.commit('SET_MESSAGE', message)
+    }
   },
   methods: {
     async submit () {
-      const { page } = this.$route.query
+      // const { page } = this.$route.query
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.loading = true
@@ -131,8 +129,8 @@ export default {
             email: this.email,
             password: this.password
           }
-          await this.$store.dispatch('authUser/LOGIN_USER', formData)
-          page === 'super' ? await this.$router.push('/calcs/calc-super') : await this.$router.push('/')
+          await this.$store.dispatch('auth/LOGIN_USER', formData)
+          await this.$router.push('/messages')
           this.loading = false
         } catch (e) {
           this.loading = false

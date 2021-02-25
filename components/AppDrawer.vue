@@ -341,6 +341,12 @@ export default {
       }
       Util.toggleFullScreen();
     },
+    closeDrawer() {
+      console.log('closeDrawer')
+      // if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
+      //   this.$store.commit('SET_STATE_DRAWER_MINI', true)
+      // }
+    }
   },
 };
 </script>

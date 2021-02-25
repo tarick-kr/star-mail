@@ -154,15 +154,15 @@ export default {
         this.loading = true
         try {
           const formData = {
-            date: moment().format('DD.MM.YYYY HH:mm'),
+            // date: moment().format('DD.MM.YYYY HH:mm'),
             name: this.name,
             email: this.email,
             password: this.password,
           }
-          await this.$store.dispatch('authUser/ADD_USER', formData)
-          await this.$store.dispatch('authUser/LOGIN_USER', formData)
-          await this.$router.push('/?message=registration')
-          await this.$store.dispatch('user/SEND_REGISTR_EMAIL', formData)
+          await this.$store.dispatch('auth/ADD_USER', formData)
+          await this.$store.dispatch('auth/LOGIN_USER', formData)
+          await this.$router.push('/messages')
+          // await this.$store.dispatch('user/SEND_REGISTR_EMAIL', formData)
           // await this.$router.push('/?message=registration')
           this.loading = false
         } catch (e) {

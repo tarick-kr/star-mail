@@ -1,7 +1,8 @@
 // import colors from 'vuetify/es5/util/colors';
 
 module.exports = {
-  ssr: false,
+  ssr: true,
+  telemetry: false,
   head: {
     titleTemplate: '%s - star-mail',
     title: 'star-mail',
@@ -26,6 +27,7 @@ module.exports = {
 
   plugins: [
     '@/plugins/vuelidate',
+    '@/plugins/axios',
   ],
 
   components: true,
@@ -38,7 +40,9 @@ module.exports = {
     '@nuxtjs/axios',
   ],
 
-  axios: {},
+  axios: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000'
+  },
 
   webfontloader: {
     custom: {
@@ -68,6 +72,19 @@ module.exports = {
   },
 
   build: {
-
+    // extend (config, ctx) {
+    //   // Run ESLint on save
+    //   if (ctx.isDev && ctx.isClient) {
+    //     config.module.rules.push({
+    //       enforce: 'pre',
+    //       test: /\.(js|vue)$/,
+    //       loader: 'eslint-loader',
+    //       exclude: /(node_modules)/,
+    //       options: {
+    //         fix: true
+    //       }
+    //     })
+    //   }
+    // }
   },
 };

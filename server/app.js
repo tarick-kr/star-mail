@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 const passportStrategy = require('./middleware/passport-strategy');
-const authUserRoutes = require('./routes/authUser.routes');
+
+const authRoutes = require('./routes/auth');
+const messageRoutes = require('./routes/message');
 
 const keys = require('./keys');
 
@@ -26,6 +28,7 @@ passport.use(passportStrategy);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/api/auth', authUserRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/message', messageRoutes);
 
 module.exports = app;

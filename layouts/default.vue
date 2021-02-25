@@ -1,38 +1,62 @@
 <template>
-  <div
-    id="appRoot"
-    v-resize.quiet="onResize"
-  >
-    <v-app
-      class="app"
+
+    <div
+      id="appRoot"
+      v-resize.quiet="onResize"
     >
-      <app-drawer
-        :window-width="windowWidth"
-        :window-height="windowHeight"
-      />
-      <app-toolbar
-        :window-width="windowWidth"
-        :window-height="windowHeight"
-        :elevationAppToolbar="elevationAppToolbar"
-      />
-      <v-fab-transition v-if="floatingBtnCreateShow">
-        <v-btn
-          class="mx-3 floating-btn-create"
-          fab
-          dark
-          medium
-          color="#FFAD00"
+      <template>
+        <v-app
+          class="app"
         >
-          <v-icon dark>
-            mdi-pencil
-          </v-icon>
-        </v-btn>
-      </v-fab-transition>
-      <v-main>
-        <nuxt />
-      </v-main>
-    </v-app>
-  </div>
+          <app-drawer
+            :window-width="windowWidth"
+            :window-height="windowHeight"
+            v-click-outside="closeDrawer"
+          />
+          <app-toolbar
+            :window-width="windowWidth"
+            :window-height="windowHeight"
+            :elevationAppToolbar="elevationAppToolbar"
+          />
+          <v-fab-transition v-if="middleDeviceLandscape">
+            <v-btn
+              class="mx-3 floating-btn-create"
+              fab
+              dark
+              medium
+              color="#FFAD00"
+            >
+              <v-icon dark>
+                mdi-pencil
+              </v-icon>
+            </v-btn>
+          </v-fab-transition>
+          <v-main>
+            <nuxt />
+          </v-main>
+        </v-app>
+      </template>
+      <template v-if="message">
+        <v-snackbar
+          :timeout="3000"
+          :color="message.color"
+          value="true"
+          @input="closeMessage"
+        >
+          {{ message.text }}
+          <v-btn
+            tile
+            text
+            @click.native="closeMessage"
+          >
+            <v-icon>
+              mdi-close
+            </v-icon>
+          </v-btn>
+        </v-snackbar>
+      </template>
+    </div>
+
 </template>
 
 <script>
@@ -47,14 +71,16 @@ export default {
     AppToolbar,
   },
   data: () => ({
-    windowWidth: window.innerWidth,
-    windowHeight: window.innerHeight,
+    windowWidth: 0,
+    windowHeight: 0,
   }),
   computed: {
     ...mapGetters({
-      offsetTop: 'offsetTop'
+      offsetTop: 'offsetTop',
+      message: 'message',
+      drawerMini: 'stateDrawerMini',
     }),
-    floatingBtnCreateShow() {
+    middleDeviceLandscape() {
       return this.windowWidth >= 600 && this.windowWidth < 1264 && this.windowHeight <= 450;
     },
     elevationAppToolbar() {
@@ -77,6 +103,14 @@ export default {
         this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', true)
       } else {
         this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', false)
+      }
+    },
+    closeMessage () {
+      this.$store.commit('CLEAR_MESSAGE')
+    },
+    closeDrawer() {
+      if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
+        this.$store.commit('SET_STATE_DRAWER_MINI', true)
       }
     }
   },

@@ -1,10 +1,12 @@
-const { Schema, model } = require('mongoose');
+const {
+  model,
+  Schema,
+  Schema: {
+    Types: { ObjectId },
+  },
+} = require("mongoose");
 
 const userSchema = new Schema({
-  date: {
-    type: Date,
-    unique: false,
-  },
   name: {
     type: String,
     unique: false,
@@ -17,10 +19,12 @@ const userSchema = new Schema({
     type: String,
     unique: false,
   },
-  subscription: {
-    type: Boolean,
-    unique: false,
-  },
+  messages: [
+    {
+      type: ObjectId,
+      ref: "Message",
+    },
+  ],
 });
 
 module.exports = model('users', userSchema);
