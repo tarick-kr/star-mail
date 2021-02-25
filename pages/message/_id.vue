@@ -22,8 +22,12 @@
             </v-btn>
           </v-card-actions>
           <v-divider dark class="hidden-sm-and-up" />
-          <v-card-title class="title">Какое-то название</v-card-title>
-          <v-card-subtitle class="subtitle-1">pochta@mail.com</v-card-subtitle>
+
+          <v-card-title class="title pb-2">Какое-то название</v-card-title>
+          <div class="d-flex justify-space-between">
+            <v-card-subtitle class="subtitle-1 pt-0 pb-2">pochta@mail.com</v-card-subtitle>
+            <v-card-subtitle class="subtitle-1 pt-0 pb-2">21.02.21</v-card-subtitle>
+          </div>
           <v-divider dark />
           <v-card-text class="title">Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей.</v-card-text>
 

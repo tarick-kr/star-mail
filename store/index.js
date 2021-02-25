@@ -3,6 +3,7 @@ export const state = () => ({
   drawerMini: false,
   fullScreen: false,
   offsetTop: 0,
+  isSmallDeviceLandscape: false
 });
 
 export const mutations = {
@@ -21,7 +22,10 @@ export const mutations = {
   OFFSET_TOP(state, val) {
     state.offsetTop = val;
   },
-};
+  IS_SMALL_DEVICE_LANDSCAPE(state, val) {
+    state.isSmallDeviceLandscape = val
+  }
+ };
 
 export const actions = {
   INIT_FULL_SCREEN({ commit }, winWidth) {
@@ -38,4 +42,5 @@ export const getters = {
   stateDrawerMini: ({drawerMini}) => drawerMini,
   fullScreen: ({fullScreen}) => fullScreen,
   offsetTop: ({offsetTop}) => offsetTop,
+  isSmallDeviceLandscape: ({isSmallDeviceLandscape}) => isSmallDeviceLandscape,
 };

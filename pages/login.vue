@@ -8,8 +8,9 @@
         max-width="400"
         outlined
         class="card-wrapper"
+        :style="isSmallDeviceLandscape ? 'width: 65%;' : ''"
       >
-        <div class="wrapper-logo">
+        <div class="wrapper-logo" v-if="!isSmallDeviceLandscape">
           <img src="../static/app_logo_accent.svg" alt="s.tar.mail" height="50">
         </div>
         <form
@@ -65,6 +66,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
+import {mapGetters} from "vuex";
 
 export default {
   layout: 'default',
@@ -73,7 +75,9 @@ export default {
     return {
       email: '',
       password: '',
-      loading: false
+      loading: false,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
     }
   },
   validations: {
@@ -84,6 +88,9 @@ export default {
     password: { required }
   },
   computed: {
+    ...mapGetters({
+      isSmallDeviceLandscape: 'isSmallDeviceLandscape'
+    }),
     emailErrors () {
       const errors = []
       if (!this.$v.email.$dirty) {
@@ -101,17 +108,17 @@ export default {
       // !this.$v.password.alphaNum && errors.push('Пароль может состоять из цифр и латиницы')
       !this.$v.password.required && errors.push('Поле не может быть пустым')
       return errors
-    }
+    },
   },
   mounted () {
-    const { message } = this.$route.query
-    if (message === 'login') {
-      const message = {
-        text: 'Для начала войдите или зарегистрируйтесь',
-        color: '#F57F17'
-      }
-      this.$store.dispatch('SET_MESSAGE', message)
-    }
+    // const { message } = this.$route.query
+    // if (message === 'login') {
+    //   const message = {
+    //     text: 'Для начала войдите или зарегистрируйтесь',
+    //     color: '#F57F17'
+    //   }
+    //   this.$store.dispatch('SET_MESSAGE', message)
+    // }
   },
   methods: {
     async submit () {

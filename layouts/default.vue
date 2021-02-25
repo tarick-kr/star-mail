@@ -64,12 +64,21 @@ export default {
   beforeMount() {
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
+    this.initScreen()
   },
   methods: {
     onResize() {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
+      this.initScreen()
     },
+    initScreen() {
+      if(window.innerHeight <= 450 && window.innerHeight < window.innerWidth) {
+        this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', true)
+      } else {
+        this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', false)
+      }
+    }
   },
 };
 </script>

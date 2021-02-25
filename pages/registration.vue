@@ -8,12 +8,14 @@
         max-width="400"
         outlined
         class="card-wrapper"
+        :style="isSmallDeviceLandscape ? 'width: 65%' : ''"
       >
-        <div class="wrapper-logo">
+        <div class="wrapper-logo" v-if="!isSmallDeviceLandscape">
           <img src="../static/app_logo_accent.svg" alt="s.tar.mail" height="50">
         </div>
         <form
           class="form"
+          :style="isSmallDeviceLandscape ? 'padding-top: 70px; padding-bottom: 13px;' : ''"
           @submit.prevent="submit"
         >
           <v-text-field
@@ -106,7 +108,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      // adminEmail: 'adminProfile/adminEmail'
+      isSmallDeviceLandscape: 'isSmallDeviceLandscape'
     }),
     nameErrors () {
       const errors = []
