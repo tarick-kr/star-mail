@@ -26,7 +26,7 @@ module.exports.loginUser = async (req, res) => {
       const token = jwt.sign({
         email: candidate.email,
         userId: candidate._id,
-      }, keys.JWT, { expiresIn: 60 * 2});
+      }, keys.JWT, { expiresIn: 60 * 60});
       await res.status(200).json(token);
     } else {
       res.status(404).json({ message: 'Пользователь не найден. Введите правильный e-mail и пароль.' });

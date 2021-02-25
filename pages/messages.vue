@@ -3,56 +3,61 @@
     <v-container id="scrollWrapper" class="overflow-y-auto" fluid>
       <transition appear appear-active-class="content-appear">
         <div v-scroll:#scrollWrapper="onScroll">
-          <div class="pt-6 px-5 pb-3">
-            <h2>Мои сообщения</h2>
-          </div>
-          <v-divider dark></v-divider>
-          <template v-if="messages.length > 0">
-            <v-list  two-line dark color="#224955">
-              <v-list-item-group>
-                <template v-for="(item, index) in messages">
-                  <v-list-item :key="item._id" :to="`/message/${item._id}`">
-                    <template v-slot:default="{ active }">
-                      <v-list-item-content>
-                        <v-list-item-title v-text="item.subject"></v-list-item-title>
+          <template v-if="fetching">
+            <div class="pt-6 px-5 pb-3">
+              <h2>Мои сообщения</h2>
+            </div>
+            <v-divider dark></v-divider>
+            <template v-if="messages.length > 0">
+              <v-list  two-line dark color="#224955">
+                <v-list-item-group>
+                  <template v-for="(item, index) in messages">
+                    <v-list-item :key="item._id" :to="`/message/${item._id}`">
+                      <template v-slot:default="{ active }">
+                        <v-list-item-content>
+                          <v-list-item-title v-text="item.subject"></v-list-item-title>
 
-                        <v-list-item-subtitle
-                          v-text="item.email"
-                        ></v-list-item-subtitle>
+                          <v-list-item-subtitle
+                            v-text="item.email"
+                          ></v-list-item-subtitle>
 
-                        <v-list-item-subtitle v-text="item.text"></v-list-item-subtitle>
-                      </v-list-item-content>
+                          <v-list-item-subtitle v-text="item.text"></v-list-item-subtitle>
+                        </v-list-item-content>
 
-                      <v-list-item-action>
-                        <v-list-item-action-text v-text="item.date"></v-list-item-action-text>
+                        <v-list-item-action>
+                          <v-list-item-action-text v-text="item.date"></v-list-item-action-text>
 
-                        <v-btn
-                          fab
-                          small
-                          text
-                        >
-                          <v-icon
-                            color="grey lighten-1"
+                          <v-btn
+                            fab
+                            small
+                            text
                           >
-                            mdi-delete-forever
-                          </v-icon>
-                        </v-btn>
-                      </v-list-item-action>
-                    </template>
-                  </v-list-item>
+                            <v-icon
+                              color="grey lighten-1"
+                            >
+                              mdi-delete-forever
+                            </v-icon>
+                          </v-btn>
+                        </v-list-item-action>
+                      </template>
+                    </v-list-item>
 
-                  <v-divider
-                    v-if="index < messages.length - 1"
-                    :key="index"
-                  ></v-divider>
-                </template>
-              </v-list-item-group>
-            </v-list>
+                    <v-divider
+                      v-if="index < messages.length - 1"
+                      :key="index"
+                    ></v-divider>
+                  </template>
+                </v-list-item-group>
+              </v-list>
+            </template>
+            <template v-else>
+              <div class="pt-6 px-5 pb-3">
+                <h3>Список сообщений пуст</h3>
+              </div>
+            </template>
           </template>
           <template v-else>
-            <div class="pt-6 px-5 pb-3">
-              <h3>Список сообщений пуст</h3>
-            </div>
+            <AppLoader />
           </template>
         </div>
       </transition>
@@ -62,16 +67,11 @@
 
 <script>
 import {mapGetters} from "vuex";
+import AppLoader from "@/components/AppLoader";
 
 export default {
   name: "messages",
   middleware: ['auth'],
-  // async asyncData ({ store }) {
-  //   const messages = await store.dispatch('messages/FETCH_MESSAGES')
-  //   return {
-  //     messages
-  //   }
-  // },
   data: () => ({
     // items: [
     //   {
@@ -152,11 +152,15 @@ export default {
     //     id: '7964262743256313'
     //   },
     // ],
-    messages: []
+    messages: [],
+    fetching: false
   }),
+  components: {
+    AppLoader
+  },
   computed: {
     ...mapGetters({
-      // messages: 'messages/messages'
+      // fetching: 'fetching'
     })
   },
   methods: {
@@ -164,14 +168,16 @@ export default {
       this.$store.commit('OFFSET_TOP', e.target.scrollTop)
     },
     async fetchMessages() {
-      // this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES')
+      this.fetching = true
+      // this.$store.commit('FETCHING', true, { root: true })
       this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES')
+      this.fetching = false
+      // this.$store.commit('FETCHING', true, { root: false })
     }
   },
   created() {
     this.$store.commit('OFFSET_TOP', 0)
     this.fetchMessages()
-    // this.$store.dispatch('messages/FETCH_MESSAGES')
   }
 }
 </script>
@@ -193,6 +199,5 @@ export default {
     .wrapper-main
       #scrollWrapper
         padding: 0 20px 0
-
 
 </style>

@@ -5,6 +5,7 @@ export const state = () => ({
   offsetTop: 0,
   isSmallDeviceLandscape: false,
   message: null,
+  fetching: false
 });
 
 export const mutations = {
@@ -32,11 +33,13 @@ export const mutations = {
   CLEAR_MESSAGE (state) {
     state.message = null
   },
+  FETCHING (state, val) {
+    state.fetching = val
+  }
  };
 
 export const actions = {
   nuxtServerInit ({ dispatch }) {
-    console.log('nuxtServerInit')
     dispatch('auth/AUTO_LOGIN')
   },
   INIT_FULL_SCREEN({ commit }, winWidth) {
@@ -55,4 +58,5 @@ export const getters = {
   offsetTop: ({offsetTop}) => offsetTop,
   isSmallDeviceLandscape: ({isSmallDeviceLandscape}) => isSmallDeviceLandscape,
   message: ({message}) => message,
+  fetching: ({fetching}) => fetching,
 };
