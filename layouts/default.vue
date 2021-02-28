@@ -1,5 +1,5 @@
 <template>
-
+  <client-only>
     <div
       id="appRoot"
       v-resize.quiet="onResize"
@@ -9,14 +9,14 @@
           class="app"
         >
           <app-drawer
+            v-click-outside="closeDrawer"
             :window-width="windowWidth"
             :window-height="windowHeight"
-            v-click-outside="closeDrawer"
           />
           <app-toolbar
             :window-width="windowWidth"
             :window-height="windowHeight"
-            :elevationAppToolbar="elevationAppToolbar"
+            :elevation-app-toolbar="elevationAppToolbar"
           />
           <v-fab-transition v-if="middleDeviceLandscape">
             <v-btn
@@ -31,7 +31,7 @@
               </v-icon>
             </v-btn>
           </v-fab-transition>
-          <v-main>
+          <v-main class="pa-0">
             <nuxt />
           </v-main>
         </v-app>
@@ -47,7 +47,7 @@
           <v-btn
             tile
             text
-            @click.native="closeMessage"
+            @click="closeMessage"
           >
             <v-icon>
               mdi-close
@@ -56,13 +56,13 @@
         </v-snackbar>
       </template>
     </div>
-
+  </client-only>
 </template>
 
 <script>
 import AppDrawer from '@/components/AppDrawer';
 import AppToolbar from '@/components/AppToolbar';
-import {mapGetters} from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Default',
@@ -84,35 +84,35 @@ export default {
       return this.windowWidth >= 600 && this.windowWidth < 1264 && this.windowHeight <= 450;
     },
     elevationAppToolbar() {
-      return this.offsetTop > 5
-    }
+      return this.offsetTop > 5;
+    },
   },
   beforeMount() {
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
-    this.initScreen()
+    this.initScreen();
   },
   methods: {
     onResize() {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
-      this.initScreen()
+      this.initScreen();
     },
     initScreen() {
-      if(window.innerHeight <= 450 && window.innerHeight < window.innerWidth) {
-        this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', true)
+      if (window.innerHeight <= 450 && window.innerHeight < window.innerWidth) {
+        this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', true);
       } else {
-        this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', false)
+        this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', false);
       }
     },
-    closeMessage () {
-      this.$store.commit('CLEAR_MESSAGE')
+    closeMessage() {
+      this.$store.commit('CLEAR_MESSAGE');
     },
     closeDrawer() {
       if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
-        this.$store.commit('SET_STATE_DRAWER_MINI', true)
+        this.$store.commit('SET_STATE_DRAWER_MINI', true);
       }
-    }
+    },
   },
 };
 </script>

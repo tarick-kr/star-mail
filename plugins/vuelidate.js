@@ -1,4 +1,4 @@
-import vuelidate from 'vuelidate'
-import Vue from 'vue'
+import vuelidate from 'vuelidate';
+import Vue from 'vue';
 
-Vue.use(vuelidate)
+Vue.use(vuelidate);

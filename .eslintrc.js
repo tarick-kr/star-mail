@@ -5,10 +5,10 @@ module.exports = {
     node: true,
   },
   extends: [
-    // 'eslint:recommended',
-    // 'airbnb-base',
-    // 'plugin:vue/essential',
-    // 'plugin:vue/vue3-recommended',
+    'eslint:recommended',
+    'airbnb-base',
+    'plugin:vue/essential',
+    'plugin:vue/vue3-recommended',
     'plugin:nuxt/base',
     'plugin:nuxt/recommended',
   ],
@@ -26,11 +26,13 @@ module.exports = {
       code: 160,
       template: 160,
     }],
-    'no-shadow': 0,
-    'no-param-reassign': 'off',
+    'no-shadow': 'off',
     'no-console': 'off',
-    'no-cjs-in-config': 'off',
+    'no-unused-expressions': 'off',
+    'no-underscore-dangle': 'off',
+    'no-param-reassign': 'off',
     'global-require': 'off',
+    'no-cjs-in-config': 0,
   },
   settings: {
     'import/resolver': {
@@ -38,5 +40,6 @@ module.exports = {
         extensions: ['.js', '.vue'],
       },
     },
+    'import/core-modules': ['vue', 'vuex'], // these modules are included in nuxt.js
   },
 };

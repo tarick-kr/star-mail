@@ -1,13 +1,12 @@
 // import colors from 'vuetify/es5/util/colors';
 
 module.exports = {
-  ssr: true,
   telemetry: false,
   head: {
     titleTemplate: '%s - star-mail',
     title: 'star-mail',
     htmlAttrs: {
-      lang: 'ru-RU',
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
@@ -26,9 +25,14 @@ module.exports = {
   ],
 
   plugins: [
+    '@/plugins/tinymce',
+    // { src: '@/plugins/tinymce', ssr: true },
     '@/plugins/vuelidate',
     '@/plugins/axios',
   ],
+  tinymce: {
+    apiKey: process.env.API_KEY_TINYMCE,
+  },
 
   components: true,
 
@@ -41,7 +45,7 @@ module.exports = {
   ],
 
   axios: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000'
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
   },
 
   webfontloader: {
@@ -69,22 +73,22 @@ module.exports = {
     options: {
       customProperties: true,
     },
+    theme: {
+      light: true,
+      themes: {
+        light: {
+          primary: '#224955',
+          accent: '#FFAD00',
+          // secondary: colors.amber.darken3,
+          // info: colors.teal.lighten1,
+          // warning: colors.amber.base,
+          // error: colors.deepOrange.accent4,
+          // success: colors.green.accent3,
+        },
+      },
+    },
   },
 
   build: {
-    // extend (config, ctx) {
-    //   // Run ESLint on save
-    //   if (ctx.isDev && ctx.isClient) {
-    //     config.module.rules.push({
-    //       enforce: 'pre',
-    //       test: /\.(js|vue)$/,
-    //       loader: 'eslint-loader',
-    //       exclude: /(node_modules)/,
-    //       options: {
-    //         fix: true
-    //       }
-    //     })
-    //   }
-    // }
   },
 };

@@ -12,7 +12,7 @@ module.exports.createUser = async (req, res) => {
     const user = new User({
       name: req.body.name,
       password: bcrypt.hashSync(req.body.password, salt),
-      email: req.body.email
+      email: req.body.email,
     });
     await user.save();
     res.status(201).json(user);
@@ -26,7 +26,8 @@ module.exports.loginUser = async (req, res) => {
       const token = jwt.sign({
         email: candidate.email,
         userId: candidate._id,
-      }, keys.JWT, { expiresIn: 60 * 60});
+        messagesIds: candidate.messages,
+      }, keys.JWT, { expiresIn: 60 * 60 });
       await res.status(200).json(token);
     } else {
       res.status(404).json({ message: 'Пользователь не найден. Введите правильный e-mail и пароль.' });

@@ -1,111 +1,187 @@
 <template>
-  <client-only>
-    <v-navigation-drawer
-      v-model="drawer"
-      mobile-breakpoint="600"
-      :mini-variant="drawerMini"
-      mini-variant-width="64"
-      fixed
-      width="260"
+  <v-navigation-drawer
+    v-model="drawer"
+    mobile-breakpoint="600"
+    :mini-variant="drawerMini"
+    mini-variant-width="64"
+    fixed
+    width="260"
+    dark
+    class="appDrawer"
+    color="#224955"
+    :class="elevationDrawer ? 'elevation-drawer' : '' "
+  >
+    <!--  Логотип  -->
+    <v-app-bar
+      height="64"
       dark
-      class="appDrawer"
       color="#224955"
-      :class="elevationDrawer ? 'elevation-drawer' : '' "
+      elevation="0"
+      class="drawer-toolbar"
     >
-      <!--  Логотип  -->
-      <v-app-bar
-        height="64"
-        dark
-        color="#224955"
-        elevation="0"
-        class="drawer-toolbar"
-      >
-        <div
-          v-if="!drawerMini"
-          class="wrap-img-logo"
-        >
-          <nuxt-link
-            to="/"
-            class="center-flex w-100"
-          >
-            <img
-              src="../static/app_logo_accent.svg"
-              height="36"
-              alt="Star Mail"
-            >
-          </nuxt-link>
-        </div>
-        <div
-          v-else
-          class="center-flex wrap-img-logo-mini"
-        >
-          <nuxt-link
-            v-if="drawerMini"
-            to="/"
-            class="center-flex w-100"
-          >
-            <img
-              src="../static/app_logo_mini_accent.svg"
-              height="36"
-              alt="Star Mail"
-            >
-          </nuxt-link>
-        </div>
-      </v-app-bar>
-      <!--  Кнопка "Создать сообщение"  -->
       <div
-        v-if="!drawerBtnCreateHidden"
-        class="center-flex-column drawer-wrapper-btn"
+        v-if="!drawerMini"
+        class="wrap-img-logo"
       >
-        <v-btn
-          v-if="!drawerMini"
-          rounded
-          color="#FFAD00"
-          large
-          class="my-2 mx-6"
+        <nuxt-link
+          to="/"
+          class="center-flex w-100"
         >
-          <v-icon
-            left
-            dark
-            class="drawer-btn-icon"
+          <img
+            src="../static/app_logo_accent.svg"
+            height="36"
+            alt="Star Mail"
           >
-            mdi-border-color
-          </v-icon>
-          <span class="drawer-btn-text">
-            написать
-          </span>
-        </v-btn>
-        <v-btn
-          v-else
-          class="mx-3"
-          fab
-          dark
-          small
-          color="#FFAD00"
-        >
-          <v-icon dark>
-            mdi-pencil
-          </v-icon>
-        </v-btn>
+        </nuxt-link>
       </div>
       <div
         v-else
-        style="margin-top: 64px;"
-      />
-      <!--  Меню  -->
-      <div
-        class="drawer-wrapper-content"
-        :style="`height: ${heightWrapperContent}px;`"
+        class="center-flex wrap-img-logo-mini"
       >
-        <v-divider />
+        <nuxt-link
+          v-if="drawerMini"
+          to="/"
+          class="center-flex w-100"
+        >
+          <img
+            src="../static/app_logo_mini_accent.svg"
+            height="36"
+            alt="Star Mail"
+          >
+        </nuxt-link>
+      </div>
+    </v-app-bar>
+    <!--  Кнопка "Создать сообщение"  -->
+    <div
+      v-if="!drawerBtnCreateHidden"
+      class="center-flex-column drawer-wrapper-btn"
+    >
+      <v-btn
+        v-if="!drawerMini"
+        rounded
+        color="#FFAD00"
+        large
+        class="my-2 mx-6"
+      >
+        <v-icon
+          left
+          dark
+          class="drawer-btn-icon"
+        >
+          mdi-border-color
+        </v-icon>
+        <span class="drawer-btn-text">
+          написать
+        </span>
+      </v-btn>
+      <v-btn
+        v-else
+        class="mx-3"
+        fab
+        dark
+        small
+        color="#FFAD00"
+      >
+        <v-icon dark>
+          mdi-pencil
+        </v-icon>
+      </v-btn>
+    </div>
+    <div
+      v-else
+      style="margin-top: 64px;"
+    />
+    <!--  Меню  -->
+    <div
+      class="drawer-wrapper-content"
+      :style="`height: ${heightWrapperContent}px;`"
+    >
+      <v-divider />
+      <v-list class="pa-0">
+        <template v-for="(item) in drawerMenuTop">
+          <v-list-item
+            v-if="item.name"
+            :key="item.title"
+            :to="item.href ? item.href : null"
+          >
+            <v-list-item-icon>
+              <v-icon>
+                {{ item.icon }}
+              </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span>
+                  {{ item.title }}
+                </span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider
+            v-else-if="item.divider"
+            :key="item.title"
+            :style="item.hiddenSmDevice && displayBtnFullscreen === 'none' ? 'display: none;' : 'display: block;'"
+          />
+          <v-list-item
+            v-else-if="item.click"
+            :key="item.title"
+            :style="`display: ${displayBtnFullscreen};`"
+            @click="handleFullScreen()"
+          >
+            <v-list-item-icon>
+              <v-icon>
+                {{ screenIcon }}
+              </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span>
+                  {{ titleFullScreen }}
+                </span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+      </v-list>
+
+      <div v-if="drawerToggleBtn">
+        <v-btn
+          v-if="drawerMini"
+          tile
+          text
+          block
+          class="drawer-toggle-btn"
+          @click="toggleDrawerMini(false)"
+        >
+          <v-icon>mdi-chevron-double-right </v-icon>
+        </v-btn>
+        <v-btn
+          v-else
+          tile
+          text
+          block
+          class="drawer-toggle-btn"
+          @click="toggleDrawerMini(true)"
+        >
+          <v-icon>mdi-chevron-double-left </v-icon>
+        </v-btn>
+      </div>
+      <v-spacer />
+      <div>
         <v-list class="pa-0">
-          <template v-for="(item) in drawerMenuTop">
+          <template v-for="(item, i) in drawerMenuBottom">
+            <v-divider
+              v-if="item.divider"
+              :key="i"
+              class="my-0"
+            />
             <v-list-item
-              v-if="item.name"
+              v-else
               :key="item.title"
               :to="item.href ? item.href : null"
+              style="height: 64px;"
             >
-              <v-list-item-icon>
+              <v-list-item-icon style="height: 32px;">
                 <v-icon>
                   {{ item.icon }}
                 </v-icon>
@@ -118,89 +194,11 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-divider
-              v-else-if="item.divider"
-              :key="item.title"
-              :style="item.hiddenSmDevice && displayBtnFullscreen === 'none' ? 'display: none;' : 'display: block;'"
-            />
-            <v-list-item
-              v-else-if="item.click"
-              :key="item.title"
-              :style="`display: ${displayBtnFullscreen};`"
-              @click="handleFullScreen()"
-            >
-              <v-list-item-icon>
-                <v-icon>
-                  {{ screenIcon }}
-                </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span>
-                    {{ titleFullScreen }}
-                  </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
           </template>
         </v-list>
-
-        <div v-if="drawerToggleBtn">
-          <v-btn
-            v-if="drawerMini"
-            tile
-            text
-            block
-            class="drawer-toggle-btn"
-            @click="toggleDrawerMini(false)"
-          >
-            <v-icon>mdi-chevron-double-right </v-icon>
-          </v-btn>
-          <v-btn
-            v-else
-            tile
-            text
-            block
-            class="drawer-toggle-btn"
-            @click="toggleDrawerMini(true)"
-          >
-            <v-icon>mdi-chevron-double-left </v-icon>
-          </v-btn>
-        </div>
-        <v-spacer />
-        <div>
-          <v-list class="pa-0">
-            <template v-for="(item, i) in drawerMenuBottom">
-              <v-divider
-                v-if="item.divider"
-                :key="i"
-                class="my-0"
-              />
-              <v-list-item
-                v-else
-                :key="item.title"
-                :to="item.href ? item.href : null"
-                style="height: 64px;"
-              >
-                <v-list-item-icon style="height: 32px;">
-                  <v-icon>
-                    {{ item.icon }}
-                  </v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    <span>
-                      {{ item.title }}
-                    </span>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-          </v-list>
-        </div>
       </div>
-    </v-navigation-drawer>
-  </client-only>
+    </div>
+  </v-navigation-drawer>
 </template>
 
 <script>
@@ -299,8 +297,8 @@ export default {
       return this.windowHeight <= 600 || this.windowWidth <= 600 ? 'flex' : 'none';
     },
     elevationDrawer() {
-      return this.drawer && !this.drawerMini && this.windowWidth >= 600 && this.windowWidth < 1264
-    }
+      return this.drawer && !this.drawerMini && this.windowWidth >= 600 && this.windowWidth < 1264;
+    },
   },
   watch: {
     windowWidth(newVal, val) {
@@ -320,13 +318,17 @@ export default {
       this.$store.commit('SET_STATE_DRAWER_MINI', val);
     },
     initDrawer() {
+      console.log('initDrawer');
       if (this.windowWidth < 600) {
         this.$store.commit('SET_STATE_DRAWER', false);
         this.$store.commit('SET_STATE_DRAWER_MINI', true);
+        console.log('windowWidth < 600');
       } else if (this.windowWidth >= 600 && this.windowWidth < 1264) {
+        console.log('windowWidth >= 600 && windowWidth < 1264');
         this.$store.commit('SET_STATE_DRAWER', true);
         this.$store.commit('SET_STATE_DRAWER_MINI', true);
       } else {
+        console.log('windowWidth >= 1264');
         this.$store.commit('SET_STATE_DRAWER', true);
         this.$store.commit('SET_STATE_DRAWER_MINI', false);
       }
@@ -342,11 +344,11 @@ export default {
       Util.toggleFullScreen();
     },
     closeDrawer() {
-      console.log('closeDrawer')
+      console.log('closeDrawer');
       // if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
       //   this.$store.commit('SET_STATE_DRAWER_MINI', true)
       // }
-    }
+    },
   },
 };
 </script>

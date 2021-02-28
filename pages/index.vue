@@ -1,10 +1,18 @@
 <template>
   <div class="wrapper-main center-flex">
-    <transition appear appear-active-class="content-appear">
+    <transition
+      appear
+      appear-active-class="content-appear"
+    >
       <div class="wrapper-text">
-        <p>Для того чтобы отправить сообщение вам нужно
-          <nuxt-link to="/login"><span>войти</span></nuxt-link>
-           или <nuxt-link to="/registration"><span>зарегистрироваться</span></nuxt-link>
+        <p>
+          Для того чтобы отправить сообщение вам нужно
+          <nuxt-link to="/login">
+            <span>войти</span>
+          </nuxt-link>
+          или <nuxt-link to="/registration">
+            <span>зарегистрироваться</span>
+          </nuxt-link>
         </p>
       </div>
     </transition>
@@ -13,7 +21,7 @@
 
 <script>
 
-import {mapGetters} from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   data: () => ({
@@ -21,41 +29,37 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      isAuthenticatedUser: 'auth/isAuthenticatedUser'
-    })
+      isAuthenticatedUser: 'auth/isAuthenticatedUser',
+    }),
   },
   created() {
-    this.$store.commit('OFFSET_TOP', 0)
+    this.$store.commit('OFFSET_TOP', 0);
     if (this.isAuthenticatedUser) {
-      this.$router.push('/messages')
+      this.$router.push('/messages');
     }
   },
-  beforeMount () {
-    // if (this.isAuthenticatedUser) {
-    //   this.$router.push('/messages')
-    // }
-  },
   mounted() {
-    const { message } = this.$route.query
+    const { message } = this.$route.query;
     switch (message) {
       case 'logout': {
         const message = {
           text: 'Вы успешно вышли',
-          color: '#00E676'
-        }
-        this.$store.dispatch('SET_MESSAGE', message)
-        break
+          color: '#00E676',
+        };
+        this.$store.dispatch('SET_MESSAGE', message);
+        break;
       }
       case 'registration': {
         const message = {
           text: 'Вы успешно зарегистрированы !!!',
-          color: '#00E676'
-        }
-        this.$store.dispatch('SET_MESSAGE', message)
-        break
+          color: '#00E676',
+        };
+        this.$store.dispatch('SET_MESSAGE', message);
+        break;
       }
+      default: console.log('');
     }
-  }
+  },
 };
 </script>
 

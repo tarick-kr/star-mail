@@ -1,31 +1,44 @@
 <template>
-  <div class="messages-page wrapper-main" >
-    <v-container id="scrollWrapper" class="overflow-y-auto" fluid>
-      <transition appear appear-active-class="content-appear">
+  <div class="messages-page wrapper-main">
+    <v-container
+      id="scrollWrapper"
+      class="overflow-y-auto"
+      fluid
+    >
+      <transition
+        appear
+        appear-active-class="content-appear"
+      >
         <div v-scroll:#scrollWrapper="onScroll">
           <template v-if="!fetching">
             <div class="pt-6 px-5 pb-3">
               <h2>Мои сообщения</h2>
             </div>
-            <v-divider dark></v-divider>
+            <v-divider dark />
             <template v-if="messages.length > 0">
-              <v-list  two-line dark color="#224955">
+              <v-list
+                two-line
+                dark
+                color="#224955"
+              >
                 <v-list-item-group>
                   <template v-for="(item, index) in messages">
-                    <v-list-item :key="item._id" :to="`/message/${item._id}`">
-                      <template v-slot:default="{ active }">
+                    <v-list-item
+                      :key="item._id"
+                      :to="`/message/${item._id}`"
+                    >
+                      <template #default="{ active }">
                         <v-list-item-content>
-                          <v-list-item-title v-text="item.subject"></v-list-item-title>
+                          <v-list-item-title v-text="item.subject" />
 
                           <v-list-item-subtitle
                             v-text="item.email"
-                          ></v-list-item-subtitle>
+                          />
 
-                          <v-list-item-subtitle v-text="item.text"></v-list-item-subtitle>
+                          <v-list-item-subtitle v-text="item.text" />
                         </v-list-item-content>
-
                         <v-list-item-action>
-                          <v-list-item-action-text v-text="item.date"></v-list-item-action-text>
+                          <v-list-item-action-text v-text="item.date" />
 
                           <v-btn
                             fab
@@ -45,7 +58,7 @@
                     <v-divider
                       v-if="index < messages.length - 1"
                       :key="index"
-                    ></v-divider>
+                    />
                   </template>
                 </v-list-item-group>
               </v-list>
@@ -66,11 +79,14 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import AppLoader from "@/components/AppLoader";
+import { mapGetters } from 'vuex';
+import AppLoader from '@/components/AppLoader';
 
 export default {
-  name: "messages",
+  name: 'Messages',
+  components: {
+    AppLoader,
+  },
   middleware: ['auth'],
   data: () => ({
     // items: [
@@ -84,21 +100,24 @@ export default {
     //   {
     //     date: '22.02.21',
     //     email: 'test@mail.com',
-    //     text: `Разнообразный и богатый опыт консультация с широким активом в значительной степени обуславливает создание существенных финансовых и административных условий.`,
+    //     text: `Разнообразный и богатый опыт консультация с широким активом в значительной степени обуславливает
+    //     создание существенных финансовых и административных условий.`,
     //     title: 'Summedfr BBQ',
     //     id: '8974321654132'
     //   },
     //   {
     //     date: '16.01.21',
     //     email: 'test-test@mail.com',
-    //     text: 'По своей сути рыбатекст является альтернативой традиционному lorem ipsum, который вызывает у некторых людей недоумение при попытках прочитать рыбу текст. ',
+    //     text: 'По своей сути рыбатекст является альтернативой традиционному lorem ipsum, который вызывает у
+    //     некторых людей недоумение при попытках прочитать рыбу текст. ',
     //     title: 'Ofui oui',
     //     id: '65650324653'
     //   },
     //   {
     //     date: '16.01.21',
     //     email: 'test@mail.com',
-    //     text: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом и придаст неповторимый колорит советских времен.',
+    //     text: 'В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет непонятным смыслом
+    //     и придаст неповторимый колорит советских времен.',
     //     title: 'Birthsdday gift',
     //     id: '6841632146853401'
     //   },
@@ -153,33 +172,30 @@ export default {
     //   },
     // ],
     messages: [],
-    fetching: false
+    fetching: false,
   }),
-  components: {
-    AppLoader
-  },
   computed: {
     ...mapGetters({
       // fetching: 'fetching'
-    })
+    }),
+  },
+  created() {
+    this.$store.commit('OFFSET_TOP', 0);
+    this.fetchMessages();
   },
   methods: {
     onScroll(e) {
-      this.$store.commit('OFFSET_TOP', e.target.scrollTop)
+      this.$store.commit('OFFSET_TOP', e.target.scrollTop);
     },
     async fetchMessages() {
-      this.fetching = true
+      this.fetching = true;
       // this.$store.commit('FETCHING', true, { root: true })
-      this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES')
-      this.fetching = false
+      this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES');
+      this.fetching = false;
       // this.$store.commit('FETCHING', true, { root: false })
-    }
+    },
   },
-  created() {
-    this.$store.commit('OFFSET_TOP', 0)
-    this.fetchMessages()
-  }
-}
+};
 </script>
 
 <style scoped lang="sass">

@@ -8,25 +8,20 @@ module.exports.createMessage = async (req, res) => {
       email: req.body.email,
       date: req.body.date,
       // userId: req.body.userId
-    })
-    await message.save()
-    return res.status(200).send(message);
+    });
+    await message.save();
   } catch (e) {
-    res.status(500).json(e)
+    res.status(500).json(e);
   }
-
 };
 
-
-module.exports.deleteMessage = async (req, res) => {
-  return {}
-};
+module.exports.deleteMessage = async (req, res) => ({});
 
 module.exports.fetchMessages = async (req, res) => {
   try {
-    const messages = await Message.find().sort({ date: -1 })
-    res.status(200).json(messages)
+    const messages = await Message.find().sort({ date: -1 });
+    res.status(200).json(messages);
   } catch (e) {
-    res.status(500).json(e)
+    res.status(500).json(e);
   }
 };

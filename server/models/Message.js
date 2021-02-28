@@ -4,29 +4,29 @@ const {
   Schema: {
     Types: { ObjectId },
   },
-} = require("mongoose");
+} = require('mongoose');
 
 const schema = new Schema({
   subject: {
     type: String,
-    default: "",
+    default: '',
   },
   text: {
     type: String,
-    default: "",
+    default: '',
   },
   email: {
     type: String,
-    default: "",
+    default: '',
   },
   date: {
     type: Date,
-    unique: false
+    unique: false,
   },
   user: {
     type: ObjectId,
-    ref: "User",
+    ref: 'User',
   },
 });
 
-module.exports = model("Message", schema);
+module.exports = model('Message', schema);

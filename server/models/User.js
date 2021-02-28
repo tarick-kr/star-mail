@@ -4,7 +4,7 @@ const {
   Schema: {
     Types: { ObjectId },
   },
-} = require("mongoose");
+} = require('mongoose');
 
 const userSchema = new Schema({
   name: {
@@ -22,7 +22,7 @@ const userSchema = new Schema({
   messages: [
     {
       type: ObjectId,
-      ref: "Message",
+      ref: 'Message',
     },
   ],
 });

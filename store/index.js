@@ -5,7 +5,7 @@ export const state = () => ({
   offsetTop: 0,
   isSmallDeviceLandscape: false,
   message: null,
-  fetching: false
+  fetching: false,
 });
 
 export const mutations = {
@@ -25,22 +25,22 @@ export const mutations = {
     state.offsetTop = val;
   },
   IS_SMALL_DEVICE_LANDSCAPE(state, val) {
-    state.isSmallDeviceLandscape = val
+    state.isSmallDeviceLandscape = val;
   },
-  SET_MESSAGE (state, message) {
-    state.message = message
+  SET_MESSAGE(state, message) {
+    state.message = message;
   },
-  CLEAR_MESSAGE (state) {
-    state.message = null
+  CLEAR_MESSAGE(state) {
+    state.message = null;
   },
-  FETCHING (state, val) {
-    state.fetching = val
-  }
- };
+  FETCHING(state, val) {
+    state.fetching = val;
+  },
+};
 
 export const actions = {
-  nuxtServerInit ({ dispatch }) {
-    dispatch('auth/AUTO_LOGIN')
+  nuxtServerInit({ dispatch }) {
+    dispatch('auth/AUTO_LOGIN');
   },
   INIT_FULL_SCREEN({ commit }, winWidth) {
     if (winWidth < 600) {
@@ -52,11 +52,11 @@ export const actions = {
 };
 
 export const getters = {
-  stateDrawer: ({drawer}) => drawer,
-  stateDrawerMini: ({drawerMini}) => drawerMini,
-  fullScreen: ({fullScreen}) => fullScreen,
-  offsetTop: ({offsetTop}) => offsetTop,
-  isSmallDeviceLandscape: ({isSmallDeviceLandscape}) => isSmallDeviceLandscape,
-  message: ({message}) => message,
-  fetching: ({fetching}) => fetching,
+  stateDrawer: ({ drawer }) => drawer,
+  stateDrawerMini: ({ drawerMini }) => drawerMini,
+  fullScreen: ({ fullScreen }) => fullScreen,
+  offsetTop: ({ offsetTop }) => offsetTop,
+  isSmallDeviceLandscape: ({ isSmallDeviceLandscape }) => isSmallDeviceLandscape,
+  message: ({ message }) => message,
+  fetching: ({ fetching }) => fetching,
 };

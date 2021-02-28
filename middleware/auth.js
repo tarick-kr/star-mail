@@ -1,5 +1,5 @@
 export default function ({ store, redirect }) {
   if (!store.getters['auth/isAuthenticatedUser']) {
-    redirect('/login?message=login')
+    redirect('/login?message=login');
   }
 }

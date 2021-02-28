@@ -1,13 +1,15 @@
 <template>
   <div class="wrapper-loading">
-    <div class="loader">Loading...</div>
+    <div class="loader">
+      Loading...
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AppLoader"
-}
+  name: 'AppLoader',
+};
 </script>
 
 <style scoped lang="sass">

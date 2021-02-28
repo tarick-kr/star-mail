@@ -17,7 +17,7 @@
         />
       </v-toolbar-title>
       <v-spacer />
-      <AppToolbarBtn v-if="isAuthenticatedUser"/>
+      <AppToolbarBtn v-if="isAuthenticatedUser" />
     </v-app-bar>
 
     <v-app-bar
@@ -56,15 +56,18 @@
         </v-icon>
       </v-btn>
       <v-spacer />
-      <div v-if="!isAuthenticatedUser" class="empty-div"></div>
-      <AppToolbarBtn v-if="isAuthenticatedUser"/>
+      <div
+        v-if="!isAuthenticatedUser"
+        class="empty-div"
+      />
+      <AppToolbarBtn v-if="isAuthenticatedUser" />
     </v-app-bar>
   </div>
 </template>
 
 <script>
 import AppToolbarBtn from '@/components/AppToolbarBtn';
-import {mapGetters} from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AppToolbar',
@@ -82,17 +85,17 @@ export default {
     },
     elevationAppToolbar: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     toolbarTop: true,
-    toolbarBottom: false
+    toolbarBottom: false,
   }),
   computed: {
     ...mapGetters({
-      isAuthenticatedUser: 'auth/isAuthenticatedUser'
-    })
+      isAuthenticatedUser: 'auth/isAuthenticatedUser',
+    }),
   },
   watch: {
     windowWidth(val) {
