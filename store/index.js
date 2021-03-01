@@ -5,7 +5,8 @@ export const state = () => ({
   offsetTop: 0,
   isSmallDeviceLandscape: false,
   message: null,
-  fetching: false,
+  // fetching: false,
+  documentReady: false,
 });
 
 export const mutations = {
@@ -33,8 +34,11 @@ export const mutations = {
   CLEAR_MESSAGE(state) {
     state.message = null;
   },
-  FETCHING(state, val) {
-    state.fetching = val;
+  // FETCHING(state, val) {
+  //   state.fetching = val;
+  // },
+  DOCUMENT_READY(state, val) {
+    state.documentReady = val;
   },
 };
 
@@ -58,5 +62,6 @@ export const getters = {
   offsetTop: ({ offsetTop }) => offsetTop,
   isSmallDeviceLandscape: ({ isSmallDeviceLandscape }) => isSmallDeviceLandscape,
   message: ({ message }) => message,
-  fetching: ({ fetching }) => fetching,
+  // fetching: ({ fetching }) => fetching,
+  documentReady: ({ documentReady }) => documentReady,
 };

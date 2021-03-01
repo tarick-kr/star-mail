@@ -94,7 +94,6 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      // fetching: 'fetching'
     }),
   },
   created() {
@@ -107,10 +106,8 @@ export default {
     },
     async fetchMessages() {
       this.fetching = true;
-      // this.$store.commit('FETCHING', true, { root: true })
       this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES');
       this.fetching = false;
-      // this.$store.commit('FETCHING', true, { root: false })
     },
   },
 };

@@ -81,6 +81,7 @@
         dark
         small
         color="#FFAD00"
+        to="/create-message"
       >
         <v-icon dark>
           mdi-pencil
@@ -318,17 +319,13 @@ export default {
       this.$store.commit('SET_STATE_DRAWER_MINI', val);
     },
     initDrawer() {
-      console.log('initDrawer');
       if (this.windowWidth < 600) {
         this.$store.commit('SET_STATE_DRAWER', false);
         this.$store.commit('SET_STATE_DRAWER_MINI', true);
-        console.log('windowWidth < 600');
       } else if (this.windowWidth >= 600 && this.windowWidth < 1264) {
-        console.log('windowWidth >= 600 && windowWidth < 1264');
         this.$store.commit('SET_STATE_DRAWER', true);
         this.$store.commit('SET_STATE_DRAWER_MINI', true);
       } else {
-        console.log('windowWidth >= 1264');
         this.$store.commit('SET_STATE_DRAWER', true);
         this.$store.commit('SET_STATE_DRAWER_MINI', false);
       }
@@ -344,7 +341,6 @@ export default {
       Util.toggleFullScreen();
     },
     closeDrawer() {
-      console.log('closeDrawer');
       // if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
       //   this.$store.commit('SET_STATE_DRAWER_MINI', true)
       // }

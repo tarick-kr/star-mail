@@ -104,7 +104,6 @@ export default {
     },
   },
   beforeMount() {
-    console.log('AppToolbar this.windowWidth - ', this.windowWidth);
     this.toolbarTop = this.windowWidth >= 600;
     this.toolbarBottom = this.windowWidth < 600;
   },

@@ -92,6 +92,19 @@ export default {
     this.windowHeight = window.innerHeight;
     this.initScreen();
   },
+  mounted() {
+    // При первоначальной загрузке (перезагрузке) - дождаться пока не загрузяться все необходимые ресурсы
+    if (!this.documentReady) {
+      document.onreadystatechange = () => {
+        if (document.readyState === 'complete') {
+          this.$store.commit('DOCUMENT_READY', true);
+          // this.loading = false;
+        }
+      };
+    // } else {
+    //   this.loading = false;
+    }
+  },
   methods: {
     onResize() {
       this.windowWidth = window.innerWidth;

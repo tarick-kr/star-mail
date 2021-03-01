@@ -3,14 +3,10 @@
     id="appRoot"
     v-resize.quiet="onResize"
   >
-    <div>
-      <template v-if="loading">
-        <AppLoader />
-      </template>
-      <template v-else>
-        <nuxt />
-      </template>
-    </div>
+    <template v-if="!loading">
+      <nuxt />
+    </template>
+
     <template v-if="message">
       <v-snackbar
         :timeout="3000"
@@ -35,12 +31,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import AppLoader from '@/components/AppLoader';
+// import AppLoader from '@/components/AppLoader';
 
 export default {
   name: 'Auth',
   components: {
-    AppLoader,
+    // AppLoader,
   },
   data: () => ({
     windowWidth: 0,
@@ -50,6 +46,7 @@ export default {
   computed: {
     ...mapGetters({
       message: 'message',
+      documentReady: 'documentReady',
     }),
   },
   created() {
@@ -61,11 +58,17 @@ export default {
     this.initScreen();
   },
   mounted() {
-    document.onreadystatechange = () => {
-      if (document.readyState === 'complete') {
-        this.loading = false;
-      }
-    };
+    // При первоначальной загрузке (перезагрузке) - дождаться пока не загрузяться все необходимые ресурсы
+    if (!this.documentReady) {
+      document.onreadystatechange = () => {
+        if (document.readyState === 'complete') {
+          this.$store.commit('DOCUMENT_READY', true);
+          this.loading = false;
+        }
+      };
+    } else {
+      this.loading = false;
+    }
   },
   methods: {
     onResize() {
