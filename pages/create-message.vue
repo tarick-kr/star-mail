@@ -19,7 +19,7 @@
             v-model="email"
             dark
             :error-messages="emailErrors"
-            label="E-mail"
+            label="Тема письма"
             required
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
@@ -231,6 +231,8 @@ export default {
         transform: translateX(-2px)
       30%, 70%
         transform: translateX(2px)
+
+    // Стили для редактора tinymce
 
     ::v-deep.tox.tox-tinymce
       border: 1px solid rgba(255, 255, 255, 0.7) // внешний border
