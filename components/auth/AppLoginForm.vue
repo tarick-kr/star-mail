@@ -24,6 +24,7 @@
         append-icon="mdi-email"
         required
         height="40"
+        color="#ffffff"
         class="text-field-conf"
         @input="$v.email.$touch()"
         @blur="$v.email.$touch()"
@@ -36,6 +37,7 @@
         append-icon="mdi-lock"
         required
         height="40"
+        color="#ffffff"
         class="text-field-conf"
         @input="$v.password.$touch()"
         @blur="$v.password.$touch()"
