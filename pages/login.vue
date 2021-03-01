@@ -1,123 +1,32 @@
 <template>
-  <div class="login-page wrapper-main">
-    <v-container class="center-flex height-wrapper">
+  <div class="login-page">
+    <v-container class="center-flex hv-100">
       <transition
         appear
         appear-active-class="content-appear"
       >
-        <v-card
-          color="#224955"
-          dark
-          max-width="400"
-          outlined
-          class="card-wrapper"
-          :style="isSmallDeviceLandscape ? 'width: 65%;' : ''"
-        >
-          <div
-            v-if="!isSmallDeviceLandscape"
-            class="wrapper-logo"
-          >
-            <img
-              src="../static/app_logo_accent.svg"
-              alt="s.tar.mail"
-              height="50"
-            >
-          </div>
-          <form
-            class="form"
-            @submit.prevent="submit"
-          >
-            <v-text-field
-              v-model.trim="email"
-              :error-messages="emailErrors"
-              label="E-mail"
-              append-icon="mdi-email"
-              required
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
-            />
-            <v-text-field
-              v-model.trim="password"
-              class="mb-6"
-              :error-messages="passwordErrors"
-              label="Пароль"
-              type="password"
-              append-icon="mdi-lock"
-              required
-              @input="$v.password.$touch()"
-              @blur="$v.password.$touch()"
-            />
-            <div class="btn-line">
-              <nuxt-link
-                class="link"
-                to="/registration"
-              >
-                <span>
-                  зарегистрироваться
-                </span>
-              </nuxt-link>
-              <v-btn
-                tile
-                text
-                color="#FFFFFF"
-                :loading="loading"
-                type="submit"
-              >
-                Войти
-              </v-btn>
-            </div>
-          </form>
-        </v-card>
+        <AppLoginForm />
       </transition>
     </v-container>
   </div>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
-import { required, email } from 'vuelidate/lib/validators';
+
+import AppLoginForm from '@/components/auth/AppLoginForm';
 import { mapGetters } from 'vuex';
 
 export default {
-  mixins: [validationMixin],
-  layout: 'default',
-  data() {
-    return {
-      email: '',
-      password: '',
-      loading: false,
-    };
+  components: {
+    AppLoginForm,
   },
-  validations: {
-    email: {
-      required,
-      email,
-    },
-    password: { required },
-  },
+  layout: 'auth',
   computed: {
     ...mapGetters({
-      isSmallDeviceLandscape: 'isSmallDeviceLandscape',
+      isAuthenticatedUser: 'auth/isAuthenticatedUser',
     }),
-    emailErrors() {
-      const errors = [];
-      if (!this.$v.email.$dirty) {
-        return errors;
-      }
-      !this.$v.email.email && errors.push('Введите правильный E-mail');
-      !this.$v.email.required && errors.push('Поле не может быть пустым');
-      return errors;
-    },
-    passwordErrors() {
-      const errors = [];
-      if (!this.$v.password.$dirty) {
-        return errors;
-      }
-      // !this.$v.password.alphaNum && errors.push('Пароль может состоять из цифр и латиницы')
-      !this.$v.password.required && errors.push('Поле не может быть пустым');
-      return errors;
-    },
   },
+
   mounted() {
     const { message } = this.$route.query;
     if (message === 'login') {
@@ -129,79 +38,11 @@ export default {
     }
   },
   created() {
+    if (this.isAuthenticatedUser) {
+      this.$router.push('/messages');
+    }
     this.$store.commit('OFFSET_TOP', 0);
   },
-  methods: {
-    async submit() {
-      // const { page } = this.$route.query
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        this.loading = true;
-        try {
-          const formData = {
-            email: this.email,
-            password: this.password,
-          };
-          await this.$store.dispatch('auth/LOGIN_USER', formData);
-          await this.$router.push('/messages');
-          this.loading = false;
-        } catch (e) {
-          this.loading = false;
-        }
-      }
-    },
-  },
+
 };
 </script>
-
-<style scoped lang="sass">
-  @import "assets/variables"
-
-  .login-page
-    .height-wrapper
-      height: calc(100vh - 64px)
-      .card-wrapper
-        max-width: 300px
-        .wrapper-logo
-          text-align: center
-          margin-bottom: 50px
-          img
-            width: 100%
-        .form
-          padding: 0 40px
-          .btn-line
-            display: flex
-            justify-content: space-between
-            align-items: center
-            margin-right: -16px
-            .link
-              color: rgba(255, 255, 255, 0.75)
-              span
-                font-size: 13px
-                letter-spacing: 1px
-
-  @media screen and (max-width: 500px)
-    .login-page
-      .height-wrapper
-        .card-wrapper
-          max-width: 300px
-          .wrapper-logo
-            margin-bottom: 30px
-            img
-              width: 60%
-          .form
-            padding: 0 24px
-
-  @media screen and (max-width: 450px)
-    .login-page
-      .height-wrapper
-        .card-wrapper
-          max-width: 300px
-          .wrapper-logo
-            margin-bottom: 30px
-            img
-              width: 80%
-          .form
-            padding: 0
-
-</style>

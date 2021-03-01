@@ -21,7 +21,7 @@
     </v-app-bar>
 
     <v-app-bar
-      v-if="toolbarBottom"
+      v-if="toolbarBottom && isAuthenticatedUser"
       app
       fixed
       bottom
