@@ -14,7 +14,7 @@
 <script>
 
 import AppLoginForm from '@/components/auth/AppLoginForm';
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -25,26 +25,26 @@ export default {
   data: () => ({
 
   }),
-  computed: {
-    ...mapGetters({
-      isAuthenticatedUser: 'auth/isAuthenticatedUser',
-    }),
-  },
-  created() {
-    if (this.isAuthenticatedUser) {
-      this.$router.push('/messages');
-    }
-    this.$store.commit('OFFSET_TOP', 0);
-  },
-  mounted() {
-    const { message } = this.$route.query;
-    if (message === 'login') {
-      const message = {
-        text: 'Для начала войдите или зарегистрируйтесь',
-        color: '#F57F17',
-      };
-      this.$store.commit('SET_MESSAGE', message);
-    }
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     isAuthenticatedUser: 'auth/isAuthenticatedUser',
+  //   }),
+  // },
+  // created() {
+  //   if (this.isAuthenticatedUser) {
+  //     this.$router.push('/messages');
+  //   }
+  //   this.$store.commit('OFFSET_TOP', 0);
+  // },
+  // mounted() {
+  //   const { message } = this.$route.query;
+  //   if (message === 'login') {
+  //     const message = {
+  //       text: 'Для начала войдите или зарегистрируйтесь',
+  //       color: '#F57F17',
+  //     };
+  //     this.$store.commit('SET_MESSAGE', message);
+  //   }
+  // },
 };
 </script>
