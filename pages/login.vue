@@ -1,7 +1,12 @@
 <template>
   <div class="login-page">
     <v-container class="center-flex hv-100">
-      <AppLoginForm />
+      <transition
+        appear
+        appear-active-class="content-appear"
+      >
+        <AppLoginForm />
+      </transition>
     </v-container>
   </div>
 </template>
@@ -13,16 +18,24 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: {
+    // AppLoginForm: () => import('@/components/auth/AppLoginForm'),
     AppLoginForm,
   },
   layout: 'auth',
+  data: () => ({
+
+  }),
   computed: {
     ...mapGetters({
       isAuthenticatedUser: 'auth/isAuthenticatedUser',
-
     }),
   },
-
+  created() {
+    if (this.isAuthenticatedUser) {
+      this.$router.push('/messages');
+    }
+    this.$store.commit('OFFSET_TOP', 0);
+  },
   mounted() {
     const { message } = this.$route.query;
     if (message === 'login') {
@@ -33,12 +46,5 @@ export default {
       this.$store.commit('SET_MESSAGE', message);
     }
   },
-  created() {
-    if (this.isAuthenticatedUser) {
-      this.$router.push('/messages');
-    }
-    this.$store.commit('OFFSET_TOP', 0);
-  },
-
 };
 </script>

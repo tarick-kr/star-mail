@@ -3,7 +3,14 @@
     id="appRoot"
     v-resize.quiet="onResize"
   >
-    <nuxt />
+    <div>
+      <template v-if="loading">
+        <AppLoader />
+      </template>
+      <template v-else>
+        <nuxt />
+      </template>
+    </div>
     <template v-if="message">
       <v-snackbar
         :timeout="3000"
@@ -28,33 +35,45 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import AppLoader from '@/components/AppLoader';
 
 export default {
   name: 'Auth',
+  components: {
+    AppLoader,
+  },
   data: () => ({
     windowWidth: 0,
     windowHeight: 0,
+    loading: false,
   }),
   computed: {
     ...mapGetters({
       message: 'message',
     }),
   },
+  created() {
+    this.loading = true;
+  },
   beforeMount() {
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
     this.initScreen();
   },
+  mounted() {
+    document.onreadystatechange = () => {
+      if (document.readyState === 'complete') {
+        this.loading = false;
+      }
+    };
+  },
   methods: {
     onResize() {
-      console.log('onResize');
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
       this.initScreen();
     },
     initScreen() {
-      console.log('initScreen innerHeight - ', window.innerHeight);
-      console.log('initScreen innerWidth - ', window.innerWidth);
       if (window.innerHeight <= 450 && window.innerHeight < window.innerWidth) {
         this.$store.commit('IS_SMALL_DEVICE_LANDSCAPE', true);
       } else {
