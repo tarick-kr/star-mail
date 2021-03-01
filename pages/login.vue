@@ -192,4 +192,16 @@ export default {
           .form
             padding: 0 24px
 
+  @media screen and (max-width: 450px)
+    .login-page
+      .height-wrapper
+        .card-wrapper
+          max-width: 300px
+          .wrapper-logo
+            margin-bottom: 30px
+            img
+              width: 80%
+          .form
+            padding: 0
+
 </style>
