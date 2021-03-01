@@ -1,12 +1,7 @@
 <template>
   <div class="login-page">
     <v-container class="center-flex hv-100">
-      <transition
-        appear
-        appear-active-class="content-appear"
-      >
-        <AppLoginForm />
-      </transition>
+      <AppLoginForm />
     </v-container>
   </div>
 </template>
