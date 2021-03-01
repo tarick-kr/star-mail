@@ -5,6 +5,7 @@
 <script>
 
 export default {
+  layout: 'auth',
   beforeCreate() {
     this.$router.push('/login');
   },

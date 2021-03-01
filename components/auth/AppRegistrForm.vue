@@ -1,77 +1,83 @@
 <template>
-  <v-card
-    color="#224955"
-    dark
-    outlined
-    class="form-wrapper"
+  <transition
+    appear
+    appear-active-class="content-appear"
   >
-    <div
-      class="wrapper-logo"
+    <v-card
+      color="#224955"
+      dark
+      outlined
+      class="form-wrapper"
+      :class="isSmallDeviceLandscape ? 'padding' : ''"
     >
-      <img
-        :src="require('@/static/app_logo_accent.svg')"
-        alt="s.tar.mail"
+      <div
+        class="wrapper-logo"
       >
-    </div>
-    <form
-      class="form"
-      @submit.prevent="submit"
-    >
-      <v-text-field
-        v-model.trim="name"
-        :error-messages="nameErrors"
-        label="Введите имя"
-        append-icon="mdi-account"
-        required
-        @input="$v.name.$touch()"
-        @blur="$v.name.$touch()"
-      />
-      <v-text-field
-        v-model.trim="email"
-        :error-messages="emailErrors"
-        label="Укажите e-mail"
-        append-icon="mdi-email"
-        required
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
-      />
-      <v-text-field
-        v-model.trim="password"
-        :error-messages="passwordErrors"
-        label="Введите пароль"
-        type="password"
-        append-icon="mdi-lock"
-        required
-        @input="$v.password.$touch()"
-        @blur="$v.password.$touch()"
-      />
-      <v-text-field
-        v-model.trim="rePassword"
-        class="mb-6"
-        :error-messages="rePasswordErrors"
-        label="Повторите пароль"
-        type="password"
-        append-icon="mdi-lock"
-        required
-        @input="$v.rePassword.$touch()"
-        @blur="$v.rePassword.$touch()"
-      />
-      <div class="btn-line">
-        <v-spacer />
-        <v-btn
-          class="btn-action"
-          tile
-          text
-          color="#FFFFFF"
-          :loading="loading"
-          :disabled="this.$v.$invalid"
-          type="submit"
+        <img
+          :src="require('@/static/app_logo_accent.svg')"
+          alt="s.tar.mail"
         >
-          Подтвердить
-        </v-btn>
       </div>
-    </form>
-  </v-card>
+      <form
+        class="form"
+        @submit.prevent="submit"
+      >
+        <v-text-field
+          v-model.trim="name"
+          :error-messages="nameErrors"
+          label="Введите имя"
+          append-icon="mdi-account"
+          required
+          @input="$v.name.$touch()"
+          @blur="$v.name.$touch()"
+        />
+        <v-text-field
+          v-model.trim="email"
+          :error-messages="emailErrors"
+          label="Укажите e-mail"
+          append-icon="mdi-email"
+          required
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+        />
+        <v-text-field
+          v-model.trim="password"
+          :error-messages="passwordErrors"
+          label="Введите пароль"
+          type="password"
+          append-icon="mdi-lock"
+          required
+          @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
+        />
+        <v-text-field
+          v-model.trim="rePassword"
+          class="mb-6"
+          :error-messages="rePasswordErrors"
+          label="Повторите пароль"
+          type="password"
+          append-icon="mdi-lock"
+          required
+          @input="$v.rePassword.$touch()"
+          @blur="$v.rePassword.$touch()"
+        />
+        <div class="btn-line">
+          <v-spacer />
+          <v-btn
+            class="btn-action"
+            tile
+            text
+            color="#FFFFFF"
+            :loading="loading"
+            :disabled="this.$v.$invalid"
+            type="submit"
+          >
+            Подтвердить
+          </v-btn>
+        </div>
+      </form>
+    </v-card>
+  </transition>
 </template>
 
 <script>
@@ -108,7 +114,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-
+      isSmallDeviceLandscape: 'isSmallDeviceLandscape',
     }),
     nameErrors() {
       const errors = [];
@@ -198,5 +204,8 @@ export default {
             letter-spacing: 1px
         .btn-action
           margin-right: -16px
+
+  .form-wrapper.padding
+    padding-top: 116px
 
 </style>

@@ -12,12 +12,6 @@
         :src="require('@/static/app_logo_accent.svg')"
         alt="s.tar.mail"
       >
-      <!--      <SvgImage-->
-      <!--        width="245"-->
-      <!--        height="51"-->
-      <!--        :image-src="require('@/static/app_logo_accent.svg')"-->
-      <!--        image-alt="s.tar.mail"-->
-      <!--      />-->
     </div>
     <form
       class="form"
@@ -70,12 +64,11 @@
 import { validationMixin } from 'vuelidate';
 import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-// import SvgImage from '@/components/SvgImage';
 
 export default {
   name: 'AppLoginForm',
   components: {
-    // SvgImage,
+
   },
   mixins: [validationMixin],
   data() {
