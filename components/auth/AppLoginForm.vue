@@ -23,17 +23,20 @@
         label="E-mail"
         append-icon="mdi-email"
         required
+        height="40"
+        class="text-field-conf"
         @input="$v.email.$touch()"
         @blur="$v.email.$touch()"
       />
       <v-text-field
         v-model.trim="password"
-        class="mb-6"
         :error-messages="passwordErrors"
         label="Пароль"
         type="password"
         append-icon="mdi-lock"
         required
+        height="40"
+        class="text-field-conf"
         @input="$v.password.$touch()"
         @blur="$v.password.$touch()"
       />
@@ -140,7 +143,7 @@ export default {
     .wrapper-logo
       width: 100%
       text-align: center
-      margin-bottom: 40px
+      margin-bottom: 30px
       img
         width: 75%
     .form
@@ -148,6 +151,7 @@ export default {
         display: flex
         justify-content: space-between
         align-items: center
+        margin-top: 20px
         .link
           color: rgba(255, 255, 255, 0.75)
           span
@@ -155,5 +159,11 @@ export default {
             letter-spacing: 1px
         .btn-action
           margin-right: -16px
+
+  .form-wrapper
+    ::v-deep.text-field-conf.error--text,
+    ::v-deep.text-field-conf .error--text
+      color: rgb(232, 108, 105) !important
+      caret-color: rgb(232, 108, 105) !important
 
 </style>

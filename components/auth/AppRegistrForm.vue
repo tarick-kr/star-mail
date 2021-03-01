@@ -1,83 +1,85 @@
 <template>
-  <transition
-    appear
-    appear-active-class="content-appear"
+  <v-card
+    color="#224955"
+    dark
+    outlined
+    class="form-wrapper"
+    :class="isSmallDeviceLandscape ? 'padding' : ''"
   >
-    <v-card
-      color="#224955"
-      dark
-      outlined
-      class="form-wrapper"
-      :class="isSmallDeviceLandscape ? 'padding' : ''"
+    <div
+      class="wrapper-logo"
     >
-      <div
-        class="wrapper-logo"
+      <img
+        :src="require('@/static/app_logo_accent.svg')"
+        alt="s.tar.mail"
       >
-        <img
-          :src="require('@/static/app_logo_accent.svg')"
-          alt="s.tar.mail"
+    </div>
+    <form
+      class="form"
+      @submit.prevent="submit"
+    >
+      <v-text-field
+        v-model.trim="name"
+        :error-messages="nameErrors"
+        label="Введите имя"
+        append-icon="mdi-account"
+        required
+        height="40"
+        class="text-field-conf"
+        @input="$v.name.$touch()"
+        @blur="$v.name.$touch()"
+      />
+      <v-text-field
+        v-model.trim="email"
+        :error-messages="emailErrors"
+        label="Укажите e-mail"
+        append-icon="mdi-email"
+        required
+        height="40"
+        class="text-field-conf"
+        @input="$v.email.$touch()"
+        @blur="$v.email.$touch()"
+      />
+      <v-text-field
+        v-model.trim="password"
+        :error-messages="passwordErrors"
+        label="Введите пароль"
+        type="password"
+        append-icon="mdi-lock"
+        required
+        height="40"
+        class="text-field-conf"
+        @input="$v.password.$touch()"
+        @blur="$v.password.$touch()"
+      />
+      <v-text-field
+        v-model.trim="rePassword"
+        :error-messages="rePasswordErrors"
+        label="Повторите пароль"
+        type="password"
+        append-icon="mdi-lock"
+        required
+        height="40"
+        class="text-field-conf"
+        @input="$v.rePassword.$touch()"
+        @blur="$v.rePassword.$touch()"
+      />
+      <div class="btn-line">
+        <v-spacer />
+        <v-btn
+          class="btn-action"
+          tile
+          text
+          color="#FFFFFF"
+          :loading="loading"
+          :disabled="this.$v.$invalid"
+          type="submit"
         >
+          Подтвердить
+        </v-btn>
       </div>
-      <form
-        class="form"
-        @submit.prevent="submit"
-      >
-        <v-text-field
-          v-model.trim="name"
-          :error-messages="nameErrors"
-          label="Введите имя"
-          append-icon="mdi-account"
-          required
-          @input="$v.name.$touch()"
-          @blur="$v.name.$touch()"
-        />
-        <v-text-field
-          v-model.trim="email"
-          :error-messages="emailErrors"
-          label="Укажите e-mail"
-          append-icon="mdi-email"
-          required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
-        />
-        <v-text-field
-          v-model.trim="password"
-          :error-messages="passwordErrors"
-          label="Введите пароль"
-          type="password"
-          append-icon="mdi-lock"
-          required
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
-        />
-        <v-text-field
-          v-model.trim="rePassword"
-          class="mb-6"
-          :error-messages="rePasswordErrors"
-          label="Повторите пароль"
-          type="password"
-          append-icon="mdi-lock"
-          required
-          @input="$v.rePassword.$touch()"
-          @blur="$v.rePassword.$touch()"
-        />
-        <div class="btn-line">
-          <v-spacer />
-          <v-btn
-            class="btn-action"
-            tile
-            text
-            color="#FFFFFF"
-            :loading="loading"
-            :disabled="this.$v.$invalid"
-            type="submit"
-          >
-            Подтвердить
-          </v-btn>
-        </div>
-      </form>
-    </v-card>
-  </transition>
+    </form>
+  </v-card>
 </template>
 
 <script>
@@ -189,7 +191,7 @@ export default {
     .wrapper-logo
       width: 100%
       text-align: center
-      margin-bottom: 40px
+      margin-bottom: 30px
       img
         width: 75%
     .form
@@ -197,6 +199,7 @@ export default {
         display: flex
         justify-content: space-between
         align-items: center
+        margin-top: 20px
         .link
           color: rgba(255, 255, 255, 0.75)
           span
@@ -206,6 +209,12 @@ export default {
           margin-right: -16px
 
   .form-wrapper.padding
-    padding-top: 116px
+    padding-top: 160px
+
+  .form-wrapper
+    ::v-deep.text-field-conf.error--text,
+    ::v-deep.text-field-conf .error--text
+      color: rgb(232, 108, 105) !important
+      caret-color: rgb(232, 108, 105) !important
 
 </style>
