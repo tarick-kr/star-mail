@@ -102,7 +102,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    transpile: [/tinymce-vue/],
+    transpile: ['@tinymce/tinymce-vue'],
     // extend(config, ctx) {},
   },
 };
