@@ -15,6 +15,7 @@
 import AppRegistrForm from '@/components/auth/AppRegistrForm';
 
 export default {
+  name: 'RegistrationPage',
   components: {
     AppRegistrForm,
   },

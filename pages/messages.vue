@@ -83,7 +83,7 @@ import { mapGetters } from 'vuex';
 import AppLoader from '@/components/AppLoader';
 
 export default {
-  name: 'Messages',
+  name: 'MessagesPage',
   components: {
     AppLoader,
   },

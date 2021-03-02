@@ -18,7 +18,7 @@
             :window-height="windowHeight"
             :elevation-app-toolbar="elevationAppToolbar"
           />
-          <v-fab-transition v-if="middleDeviceLandscape">
+          <v-fab-transition v-if="middleDeviceLandscape && !isCreateMessagePage">
             <v-btn
               class="mx-3 floating-btn-create"
               fab
@@ -85,6 +85,9 @@ export default {
     },
     elevationAppToolbar() {
       return this.offsetTop > 5;
+    },
+    isCreateMessagePage() {
+      return this.$route.path === '/create-message';
     },
   },
   beforeMount() {

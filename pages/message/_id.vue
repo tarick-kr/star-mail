@@ -60,6 +60,7 @@
 <script>
 
 export default {
+  name: 'MessageOne',
   created() {
     // При изменении OFFSET_TOP у AppToolbar появится тень
     this.$store.commit('OFFSET_TOP', 0);

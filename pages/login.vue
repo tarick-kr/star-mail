@@ -17,6 +17,7 @@ import AppLoginForm from '@/components/auth/AppLoginForm';
 // import { mapGetters } from 'vuex';
 
 export default {
+  name: 'LoginPage',
   components: {
     // AppLoginForm: () => import('@/components/auth/AppLoginForm'),
     AppLoginForm,

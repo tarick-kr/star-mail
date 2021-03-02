@@ -2,7 +2,7 @@
   <div class="create-message-page wrapper-main">
     <v-container
       id="scrollWrapper"
-      class="center-flex height-wrapper overflow-y-auto"
+      class="overflow-y-auto"
       fluid
     >
       <transition
@@ -23,7 +23,7 @@
               v-model="email"
               dark
               :error-messages="emailErrors"
-              label="Тема письма"
+              label="Email"
               required
               @input="$v.email.$touch()"
               @blur="$v.email.$touch()"
@@ -35,7 +35,7 @@
               v-model="subject"
               dark
               :error-messages="subjectErrors"
-              label="Тема письма"
+              label="Тема"
               required
               @input="$v.subject.$touch()"
               @blur="$v.subject.$touch()"
@@ -78,8 +78,10 @@
               />
             </div>
             <v-divider class="mb-6" />
-            <div style="display: flex; justify-content: flex-end">
+            <div class="btn-line">
+              <v-spacer />
               <v-btn
+                class="btn-action"
                 tile
                 text
                 color="#ffffff"
@@ -103,7 +105,7 @@ import { API_KEY_TINYMCE } from '@/server/keys';
 import Editor from '@tinymce/tinymce-vue';
 
 export default {
-  name: 'AppSubscribe',
+  name: 'CreateMessagePage',
   components: {
     editor: Editor,
   },
@@ -158,9 +160,6 @@ export default {
     textErrorEditor() {
       return this.textMailErrors[0];
     },
-    // maxHeightScrollWrapper() {
-    //   return this.windowHeight;
-    // },
   },
   created() {
     // При изменении OFFSET_TOP у AppToolbar появится тень
@@ -206,160 +205,184 @@ export default {
   .wrapper-main
     #scrollWrapper
       max-height: calc(100vh - 64px)
-      padding-top: 90px
+      //padding: 12px 12px 20px
+      .form-admins
+        width: fit-content
+        min-width: 800px
+        margin-left: 25px
+
+        .error-description-hint
+          font-size: 12px
+          color: #ff5252
+
+        .error-emergence-hint-on
+          animation: .2s ease-in-out both fade-in
+
+        .btn-line
+          display: flex
+          justify-content: space-between
+          align-items: center
+          .btn-action
+            margin-right: -16px
+
+  .wrapper-main
     #scrollWrapper::-webkit-scrollbar
       width: 0
+
+  .wrapper-main
+    #scrollWrapper
+      .form-admins
+        // Стили для редактора tinymce
+        // desktop
+        ::v-deep.tox.tox-tinymce
+          border: 1px solid rgba(255, 255, 255, 0.7) // внешний border
+          .tox-editor-container
+            .tox-editor-header
+              .tox-toolbar-overlord
+                .tox-toolbar__primary
+                  background-color: #224955
+                  .tox-toolbar__group
+                    .tox-tbtn
+                      .tox-icon.tox-tbtn__icon-wrap
+                        svg
+                          fill: #fafafa
+                      &:hover
+                        .tox-icon.tox-tbtn__icon-wrap
+                          svg
+                            fill: #224955
+
+                    .tox-tbtn.tox-tbtn--disabled
+                      .tox-icon.tox-tbtn__icon-wrap
+                        svg
+                          fill: #4e6e77
+                      &:hover, &:focus
+                        .tox-icon.tox-tbtn__icon-wrap
+                          svg
+                            fill: #4e6e77
+
+                    .tox-tbtn.tox-tbtn--enabled
+                      .tox-icon.tox-tbtn__icon-wrap
+                        svg
+                          fill: #224955
+
+                    .tox-tbtn.tox-tbtn--select.tox-tbtn--bespoke
+                      color: #fafafa
+                      .tox-tbtn__select-chevron
+                        svg
+                          fill: #fafafa
+                      &:hover
+                        color: #224955
+                        .tox-tbtn__select-chevron
+                          svg
+                            fill: #224955
+
+            .tox-sidebar-wrap
+              .tox-edit-area
+                .tox-edit-area__iframe
+                  background-color: #224955
+
+        // mobile version tinymce
+        ::v-deep.tox.tox-tinymce.tox-platform-touch
+          width: 100%
+          max-width: 500px
+          z-index: 0
+          .tox-editor-container
+            .tox-editor-header
+              .tox-toolbar.tox-toolbar--scrolling
+                background-color: #224955
+                .tox-toolbar__group
+                  .tox-tbtn
+                    .tox-icon.tox-tbtn__icon-wrap
+                      svg
+                        fill: #fafafa
+                    &:hover
+                      .tox-icon.tox-tbtn__icon-wrap
+                        svg
+                          fill: #224955
+
+                  .tox-tbtn.tox-tbtn--disabled
+                    .tox-icon.tox-tbtn__icon-wrap
+                      svg
+                        fill: #4e6e77
+                    &:hover, &:focus
+                      .tox-icon.tox-tbtn__icon-wrap
+                        svg
+                          fill: #4e6e77
+
+                  .tox-tbtn.tox-tbtn--enabled
+                    .tox-icon.tox-tbtn__icon-wrap
+                      svg
+                        fill: #224955
+
+                  .tox-tbtn.tox-tbtn--select.tox-tbtn--bespoke
+                    color: #fafafa
+                    .tox-tbtn__select-chevron
+                      svg
+                        fill: #fafafa
+                    &:hover
+                      color: #224955
+                      .tox-tbtn__select-chevron
+                        svg
+                          fill: #224955
+
+  @media screen and (max-width: 960px)
+    .wrapper-main
+      #scrollWrapper
+        .form-admins
+          min-width: 600px
+
+  @media screen and (max-width: 760px)
+    .wrapper-main
+      #scrollWrapper
+        .form-admins
+          min-width: unset
 
   @media screen and (max-width: 600px)
     .wrapper-main
       #scrollWrapper
-        //max-height: none
-        //padding-top: 0
+        max-height: calc(100vh - 64px)
+        .form-admins
+          margin-left: 20px
 
-  .form-admins
-    width: fit-content
+  @media screen and (max-width: 450px)
+    .wrapper-main
+      #scrollWrapper
+        .form-admins
+          margin: 0 auto
+          ::v-deep.tox.tox-tinymce.tox-platform-touch
+            max-width: 300px
 
-    .app-wrap-img
-      display: flex
-      justify-content: space-between
-      align-items: flex-end
-
-    .error-description-hint
-      font-size: 12px
-      color: #ff5252
-
-    .error-emergence-hint-on
-      animation: .2s ease-in-out both fade-in
-
-    @keyframes fade-in
-      0%
-        opacity: 0
-        transform: scaleY(0)
-      100%
-        opacity: 1
-        transform: scaleY(1)
-
-    .error-emergence-hint-off
-      animation: .2s ease-in-out both fade-out
-
-    @keyframes fade-out
-      0%
-        opacity: 1
-        transform: scaleY(1)
-      100%
-        opacity: 0
-        transform: scaleY(0)
-
-    .error-modification-title
-      color: #ff5252
-      animation-name: shake
-      animation-duration: 0.2s
-      animation-fill-mode: both
-      animation-timing-function: ease-out
-
-    @keyframes shake
-      0%, 100%
-        transform: translateX(0)
-      10%, 50%, 90%
-        transform: translateX(-2px)
-      30%, 70%
-        transform: translateX(2px)
-
-    // Стили для редактора tinymce
-    // desktop
-    ::v-deep.tox.tox-tinymce
-      border: 1px solid rgba(255, 255, 255, 0.7) // внешний border
-      .tox-editor-container
-        .tox-editor-header
-          .tox-toolbar-overlord
-            .tox-toolbar__primary
-              background-color: #224955
-              .tox-toolbar__group
-                .tox-tbtn
-                  .tox-icon.tox-tbtn__icon-wrap
-                    svg
-                      fill: #fafafa
-                  &:hover
-                    .tox-icon.tox-tbtn__icon-wrap
-                      svg
-                        fill: #224955
-
-                .tox-tbtn.tox-tbtn--disabled
-                  .tox-icon.tox-tbtn__icon-wrap
-                    svg
-                      fill: #4e6e77
-                  &:hover, &:focus
-                    .tox-icon.tox-tbtn__icon-wrap
-                      svg
-                        fill: #4e6e77
-
-                .tox-tbtn.tox-tbtn--enabled
-                  .tox-icon.tox-tbtn__icon-wrap
-                    svg
-                      fill: #224955
-
-                .tox-tbtn.tox-tbtn--select.tox-tbtn--bespoke
-                  color: #fafafa
-                  .tox-tbtn__select-chevron
-                    svg
-                      fill: #fafafa
-                  &:hover
-                    color: #224955
-                    .tox-tbtn__select-chevron
-                      svg
-                        fill: #224955
-
-        .tox-sidebar-wrap
-          .tox-edit-area
-            .tox-edit-area__iframe
-              background-color: #224955
-
-    // mobile version tinymce
-    ::v-deep.tox.tox-tinymce.tox-platform-touch
-      width: 100%
-      max-width: 500px
-      z-index: 0
-      .tox-editor-container
-        .tox-editor-header
-          .tox-toolbar.tox-toolbar--scrolling
-            background-color: #224955
-            .tox-toolbar__group
-              .tox-tbtn
-                .tox-icon.tox-tbtn__icon-wrap
-                  svg
-                    fill: #fafafa
-                &:hover
-                  .tox-icon.tox-tbtn__icon-wrap
-                    svg
-                      fill: #224955
-
-              .tox-tbtn.tox-tbtn--disabled
-                .tox-icon.tox-tbtn__icon-wrap
-                  svg
-                    fill: #4e6e77
-                &:hover, &:focus
-                  .tox-icon.tox-tbtn__icon-wrap
-                    svg
-                      fill: #4e6e77
-
-              .tox-tbtn.tox-tbtn--enabled
-                .tox-icon.tox-tbtn__icon-wrap
-                  svg
-                    fill: #224955
-
-              .tox-tbtn.tox-tbtn--select.tox-tbtn--bespoke
-                color: #fafafa
-                .tox-tbtn__select-chevron
-                  svg
-                    fill: #fafafa
-                &:hover
-                  color: #224955
-                  .tox-tbtn__select-chevron
-                    svg
-                      fill: #224955
-
-    @media screen and (max-width: 450px)
-      ::v-deep.tox.tox-tinymce.tox-platform-touch
-        max-width: 300px
-
+  //@keyframes fade-in
+  //  0%
+  //    opacity: 0
+  //    transform: scaleY(0)
+  //  100%
+  //    opacity: 1
+  //    transform: scaleY(1)
+  //
+  //.error-emergence-hint-off
+  //  animation: .2s ease-in-out both fade-out
+  //
+  //@keyframes fade-out
+  //  0%
+  //    opacity: 1
+  //    transform: scaleY(1)
+  //  100%
+  //    opacity: 0
+  //    transform: scaleY(0)
+  //
+  //.error-modification-title
+  //  color: #ff5252
+  //  animation-name: shake
+  //  animation-duration: 0.2s
+  //  animation-fill-mode: both
+  //  animation-timing-function: ease-out
+  //
+  //@keyframes shake
+  //  0%, 100%
+  //    transform: translateX(0)
+  //  10%, 50%, 90%
+  //    transform: translateX(-2px)
+  //  30%, 70%
+  //    transform: translateX(2px)
 </style>

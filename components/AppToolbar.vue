@@ -44,6 +44,7 @@
       </v-toolbar-title>
       <v-spacer />
       <v-btn
+        v-if="!isCreateMessagePage"
         class="mb-12"
         fab
         dark
@@ -96,6 +97,9 @@ export default {
     ...mapGetters({
       isAuthenticatedUser: 'auth/isAuthenticatedUser',
     }),
+    isCreateMessagePage() {
+      return this.$route.path === '/create-message';
+    },
   },
   watch: {
     windowWidth(val) {

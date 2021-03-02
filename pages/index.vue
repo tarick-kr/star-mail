@@ -7,8 +7,8 @@
 import { mapGetters } from 'vuex';
 
 export default {
+  name: 'Index',
   layout: 'auth',
-
   // beforeCreate() {
   //   this.$router.push('/login');
   // },

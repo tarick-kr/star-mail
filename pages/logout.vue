@@ -15,6 +15,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
+  name: 'LogoutPage',
   layout: 'default',
   computed: {
     ...mapGetters({
