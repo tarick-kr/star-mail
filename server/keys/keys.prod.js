@@ -6,5 +6,5 @@ module.exports = {
   // EMAIL_CLIENT_SECRET: process.env.EMAIL_CLIENT_SECRET,
   // EMAIL_REFRESH_TOKEN: process.env.EMAIL_REFRESH_TOKEN,
   BASE_URL: process.env.BASE_URL,
-  API_KEY_TINYMCE: process.env.API_KEY_TINYMCE,
+  // API_KEY_TINYMCE: process.env.API_KEY_TINYMCE,
 };

@@ -28,7 +28,7 @@
           class="center-flex w-100"
         >
           <img
-            src="../static/app_logo_accent.svg"
+            :src="require('@/static/app_logo_accent.svg')"
             height="36"
             alt="Star Mail"
           >
@@ -44,7 +44,7 @@
           class="center-flex w-100"
         >
           <img
-            src="../static/app_logo_mini_accent.svg"
+            :src="require('@/static/app_logo_mini_accent.svg')"
             height="36"
             alt="Star Mail"
           >
@@ -62,6 +62,7 @@
         color="#FFAD00"
         large
         class="my-2 mx-6"
+        to="/create-message"
       >
         <v-icon
           left

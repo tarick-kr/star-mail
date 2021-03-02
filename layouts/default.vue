@@ -25,6 +25,7 @@
               dark
               medium
               color="#FFAD00"
+              to="/create-message"
             >
               <v-icon dark>
                 mdi-pencil

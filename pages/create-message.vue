@@ -75,7 +75,6 @@
                 @onFocus="removeInitialValue"
               />
             </div>
-            <v-divider class="mb-6" />
             <div class="btn-line">
               <v-spacer />
               <v-btn
@@ -212,6 +211,7 @@ export default {
           display: flex
           justify-content: space-between
           align-items: center
+          margin-top: 24px
           .btn-action
             margin-right: -16px
 
