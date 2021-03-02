@@ -214,7 +214,7 @@ export default {
     .wrapper-main
       #scrollWrapper
         //max-height: none
-        padding-top: 0
+        //padding-top: 0
 
   .form-admins
     width: fit-content
