@@ -9,7 +9,9 @@
         appear
         appear-active-class="content-appear"
       >
-        <div v-scroll:#scrollWrapper="onScroll">
+        <div
+          v-scroll:#scrollWrapper="onScroll"
+        >
           <form
             class="form-admins"
             @submit.prevent="submit"
@@ -113,7 +115,7 @@ export default {
       subject: '',
       // textMail: '<p style=\'font-style: italic; color: #00000099;\'>Введите какой-то текст...</p>',
       loading: false,
-      width: 300,
+      // windowHeight: 0,
     };
   },
   validations: {
@@ -156,12 +158,18 @@ export default {
     textErrorEditor() {
       return this.textMailErrors[0];
     },
+    // maxHeightScrollWrapper() {
+    //   return this.windowHeight;
+    // },
   },
   created() {
     // При изменении OFFSET_TOP у AppToolbar появится тень
     this.$store.commit('OFFSET_TOP', 0);
     console.log('OFFSET_TOP - ', this.$store.getters.offsetTop);
   },
+  // beforeMount() {
+  //   this.windowHeight = window.innerHeight;
+  // },
   methods: {
     // removeInitialValue() {
     //   this.textMail = '';
@@ -205,7 +213,8 @@ export default {
   @media screen and (max-width: 600px)
     .wrapper-main
       #scrollWrapper
-        max-height: none
+        //max-height: none
+        padding-top: 0
 
   .form-admins
     width: fit-content
