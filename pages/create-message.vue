@@ -54,7 +54,7 @@
             <div>
               <editor
                 v-model="textMail"
-                :api-key="apiKeyTinyMce"
+                api-key="uhxykia7elg30g9994dpwrw183c8xlvbzh8a23ta3igo19ng"
                 :error-messages="textMailErrors"
                 :init="{
                   statusbar: false,
