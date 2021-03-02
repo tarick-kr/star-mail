@@ -110,6 +110,7 @@ export default {
     editor: Editor,
   },
   mixins: [validationMixin],
+  middleware: ['auth'],
   data() {
     return {
       apiKeyTinyMce: API_KEY_TINYMCE,
@@ -205,7 +206,6 @@ export default {
   .wrapper-main
     #scrollWrapper
       max-height: calc(100vh - 64px)
-      //padding: 12px 12px 20px
       .form-admins
         width: fit-content
         min-width: 800px
@@ -225,6 +225,7 @@ export default {
           .btn-action
             margin-right: -16px
 
+  // Скрытие скролла
   .wrapper-main
     #scrollWrapper::-webkit-scrollbar
       width: 0
