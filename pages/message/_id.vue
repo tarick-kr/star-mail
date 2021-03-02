@@ -9,64 +9,82 @@
         appear
         appear-active-class="content-appear"
       >
-        <v-card
-          dark
-          color="#224955"
-          class="card-message"
-          outlined
-        >
-          <v-card-actions>
-            <v-btn
-              fab
-              small
-              text
-              to="/messages"
-            >
-              <v-icon>
-                mdi-keyboard-backspace
-              </v-icon>
-            </v-btn>
-          </v-card-actions>
-          <v-divider
+        <div v-scroll:#scrollWrapper="onScroll">
+          <v-card
             dark
-            class="hidden-sm-and-up"
-          />
+            color="#224955"
+            class="card-message"
+            outlined
+          >
+            <v-card-actions>
+              <v-btn
+                fab
+                small
+                text
+                to="/messages"
+              >
+                <v-icon>
+                  mdi-keyboard-backspace
+                </v-icon>
+              </v-btn>
+            </v-card-actions>
+            <v-divider
+              dark
+              class="hidden-sm-and-up"
+            />
 
-          <v-card-title class="title pb-2">
-            Какое-то название
-          </v-card-title>
-          <div class="d-flex justify-space-between">
-            <v-card-subtitle class="subtitle-1 pt-0 pb-2">
-              pochta@mail.com
-            </v-card-subtitle>
-            <v-card-subtitle class="subtitle-1 pt-0 pb-2">
-              21.02.21
-            </v-card-subtitle>
-          </div>
-          <v-divider dark />
-          <v-card-text class="title">
-            Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же
-            постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское
-            обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей.
-          </v-card-text>
-        </v-card>
+            <v-card-title class="title pb-2">
+              Какое-то название
+            </v-card-title>
+            <div class="d-flex justify-space-between">
+              <v-card-subtitle class="subtitle-1 pt-0 pb-2">
+                pochta@mail.com
+              </v-card-subtitle>
+              <v-card-subtitle class="subtitle-1 pt-0 pb-2">
+                21.02.21
+              </v-card-subtitle>
+            </div>
+            <v-divider dark />
+            <v-card-text class="title">
+              Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же
+              постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское
+              обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей.
+            </v-card-text>
+          </v-card>
+        </div>
       </transition>
     </v-container>
   </div>
 </template>
 
 <script>
+
 export default {
+  created() {
+    // При изменении OFFSET_TOP у AppToolbar появится тень
+    this.$store.commit('OFFSET_TOP', 0);
+    console.log('OFFSET_TOP - ', this.$store.getters.offsetTop);
+  },
+  methods: {
+    onScroll(e) {
+      console.log('onScroll');
+      this.$store.commit('OFFSET_TOP', e.target.scrollTop);
+    },
+  },
 
 };
 </script>
 
 <style scoped lang="sass">
+
   .wrapper-main
     #scrollWrapper
+      max-height: calc(100vh - 64px)
       .card-message
         max-width: 70%
         margin-left: 48px
+    #scrollWrapper::-webkit-scrollbar
+      width: 0
 
   @media screen and (max-width: 1264px)
     .wrapper-main

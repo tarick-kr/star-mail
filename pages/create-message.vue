@@ -1,89 +1,94 @@
 <template>
-  <div class="login-page wrapper-main">
+  <div class="create-message-page wrapper-main">
     <v-container
+      id="scrollWrapper"
+      class="center-flex height-wrapper overflow-y-auto"
       fluid
-      class="center-flex height-wrapper"
     >
       <transition
         appear
         appear-active-class="content-appear"
       >
-        <form
-          class="form-admins"
-          @submit.prevent="submit"
-        >
-          <h2 class="subtitle-1 mt-4 font-weight-bold">
-            Укажите email получателя:
-          </h2>
-          <v-text-field
-            v-model="email"
-            dark
-            :error-messages="emailErrors"
-            label="Тема письма"
-            required
-            @input="$v.email.$touch()"
-            @blur="$v.email.$touch()"
-          />
-          <h2 class="subtitle-1 mt-4 font-weight-bold">
-            Укажите тему письма:
-          </h2>
-          <v-text-field
-            v-model="subject"
-            dark
-            :error-messages="subjectErrors"
-            label="Тема письма"
-            required
-            @input="$v.subject.$touch()"
-            @blur="$v.subject.$touch()"
-          />
-          <h2
-            class="subtitle-1 mt-4 font-weight-bold"
-            :class="textErrorEditor ? 'error-modification-title' : ''"
+        <div v-scroll:#scrollWrapper="onScroll">
+          <form
+            class="form-admins"
+            @submit.prevent="submit"
           >
-            Содержание письма:
-          </h2>
-          <div :class="textErrorEditor ? 'error-emergence-hint-on' : 'error-emergence-hint-off'">
-            <p class="error-description-hint">
-              {{ textErrorEditor }}
-            </p>
-          </div>
-          <editor
-            v-model="textMail"
-            :api-key="apiKeyTinyMce"
-            :error-messages="textMailErrors"
-            :init="{
-              statusbar: false,
-              placeholder: 'Введите текст сообщения...',
-              height: 250,
-              menubar: false,
-              content_style: '.mce-content-body {color: #fafafa;} ' +
-                '.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: rgb(250,250,250,.6);}',
-              plugins: [
-                'advlist autolink lists link image charmap print anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-              ],
-              toolbar: 'undo redo | formatselect | ' +
-                'bold italic | alignleft aligncenter ' +
-                'alignright alignjustify',
-            }"
-            @input="$v.textMail.$touch()"
-            @onClick="removeInitialValue"
-            @onFocus="removeInitialValue"
-          />
-          <v-divider class="mb-6" />
-          <div style="display: flex; justify-content: flex-end">
-            <v-btn
-              tile
-              text
-              color="#ffffff"
-              :loading="loading"
-              type="submit"
+            <h2 class="subtitle-1 mt-4 font-weight-bold">
+              Укажите email получателя:
+            </h2>
+            <v-text-field
+              v-model="email"
+              dark
+              :error-messages="emailErrors"
+              label="Тема письма"
+              required
+              @input="$v.email.$touch()"
+              @blur="$v.email.$touch()"
+            />
+            <h2 class="subtitle-1 mt-4 font-weight-bold">
+              Укажите тему письма:
+            </h2>
+            <v-text-field
+              v-model="subject"
+              dark
+              :error-messages="subjectErrors"
+              label="Тема письма"
+              required
+              @input="$v.subject.$touch()"
+              @blur="$v.subject.$touch()"
+            />
+            <h2
+              class="subtitle-1 mt-4 font-weight-bold"
+              :class="textErrorEditor ? 'error-modification-title' : ''"
             >
-              Отправить
-            </v-btn>
-          </div>
-        </form>
+              Содержание письма:
+            </h2>
+            <div :class="textErrorEditor ? 'error-emergence-hint-on' : 'error-emergence-hint-off'">
+              <p class="error-description-hint">
+                {{ textErrorEditor }}
+              </p>
+            </div>
+            <div>
+              <editor
+                v-model="textMail"
+                :api-key="apiKeyTinyMce"
+                :error-messages="textMailErrors"
+                :init="{
+                  statusbar: false,
+                  placeholder: 'Введите текст сообщения...',
+                  height: 250,
+                  menubar: false,
+                  content_style: '.mce-content-body {color: #fafafa;}' +
+                    '.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: rgb(250,250,250,.6);}',
+                  plugins: [
+                    'advlist autolink lists link image charmap print anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar: 'undo redo | formatselect | ' +
+                    'bold italic | alignleft aligncenter ' +
+                    'alignright alignjustify',
+                }"
+                @input="$v.textMail.$touch()"
+                @onClick="removeInitialValue"
+                @onFocus="removeInitialValue"
+              />
+            </div>
+            <v-divider class="mb-6" />
+            <div style="display: flex; justify-content: flex-end">
+              <v-btn
+                tile
+                text
+                color="#ffffff"
+                :loading="loading"
+                type="submit"
+              >
+                Отправить
+              </v-btn>
+            </div>
+          </form>
+        </div>
       </transition>
     </v-container>
   </div>
@@ -108,6 +113,7 @@ export default {
       subject: '',
       // textMail: '<p style=\'font-style: italic; color: #00000099;\'>Введите какой-то текст...</p>',
       loading: false,
+      width: 300,
     };
   },
   validations: {
@@ -152,12 +158,18 @@ export default {
     },
   },
   created() {
-
+    // При изменении OFFSET_TOP у AppToolbar появится тень
+    this.$store.commit('OFFSET_TOP', 0);
+    console.log('OFFSET_TOP - ', this.$store.getters.offsetTop);
   },
   methods: {
     // removeInitialValue() {
     //   this.textMail = '';
     // },
+    onScroll(e) {
+      console.log('onScroll');
+      this.$store.commit('OFFSET_TOP', e.target.scrollTop);
+    },
     async submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
@@ -183,8 +195,20 @@ export default {
 
 <style scoped lang="sass">
 
+  .wrapper-main
+    #scrollWrapper
+      max-height: calc(100vh - 64px)
+      padding-top: 50px
+    #scrollWrapper::-webkit-scrollbar
+      width: 0
+
+  @media screen and (max-width: 600px)
+    .wrapper-main
+      #scrollWrapper
+        max-height: calc(100vh - 64px)
+
   .form-admins
-    width: 500px
+    width: fit-content
 
     .app-wrap-img
       display: flex
@@ -233,7 +257,7 @@ export default {
         transform: translateX(2px)
 
     // Стили для редактора tinymce
-
+    // desktop
     ::v-deep.tox.tox-tinymce
       border: 1px solid rgba(255, 255, 255, 0.7) // внешний border
       .tox-editor-container
@@ -280,5 +304,53 @@ export default {
           .tox-edit-area
             .tox-edit-area__iframe
               background-color: #224955
+
+    // mobile version tinymce
+    ::v-deep.tox.tox-tinymce.tox-platform-touch
+      width: 100%
+      max-width: 500px
+      z-index: 0
+      .tox-editor-container
+        .tox-editor-header
+          .tox-toolbar.tox-toolbar--scrolling
+            background-color: #224955
+            .tox-toolbar__group
+              .tox-tbtn
+                .tox-icon.tox-tbtn__icon-wrap
+                  svg
+                    fill: #fafafa
+                &:hover
+                  .tox-icon.tox-tbtn__icon-wrap
+                    svg
+                      fill: #224955
+
+              .tox-tbtn.tox-tbtn--disabled
+                .tox-icon.tox-tbtn__icon-wrap
+                  svg
+                    fill: #4e6e77
+                &:hover, &:focus
+                  .tox-icon.tox-tbtn__icon-wrap
+                    svg
+                      fill: #4e6e77
+
+              .tox-tbtn.tox-tbtn--enabled
+                .tox-icon.tox-tbtn__icon-wrap
+                  svg
+                    fill: #224955
+
+              .tox-tbtn.tox-tbtn--select.tox-tbtn--bespoke
+                color: #fafafa
+                .tox-tbtn__select-chevron
+                  svg
+                    fill: #fafafa
+                &:hover
+                  color: #224955
+                  .tox-tbtn__select-chevron
+                    svg
+                      fill: #224955
+
+    @media screen and (max-width: 450px)
+      ::v-deep.tox.tox-tinymce.tox-platform-touch
+        max-width: 300px
 
 </style>
