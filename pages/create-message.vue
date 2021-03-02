@@ -262,7 +262,8 @@ export default {
       .tooltip-style
         color: #FFAD00
         border: 1px solid #FFAD00
-        background-color: #224955
+        background: rgba(34, 73, 85, .95)
+        opacity: 0.95!important
       .form-admins
         .tooltip-icon
           &:hover
