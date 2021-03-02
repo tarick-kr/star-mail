@@ -64,9 +64,7 @@
                   content_style: '.mce-content-body {color: #fafafa;}' +
                     '.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: rgb(250,250,250,.6);}',
                   plugins: [
-                    'advlist autolink lists link image charmap print anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount'
+                    'autolink lists link'
                   ],
                   toolbar: 'undo redo | formatselect | ' +
                     'bold italic | alignleft aligncenter ' +
@@ -116,9 +114,7 @@ export default {
       apiKeyTinyMce: API_KEY_TINYMCE,
       email: '',
       subject: '',
-      // textMail: '<p style=\'font-style: italic; color: #00000099;\'>Введите какой-то текст...</p>',
       loading: false,
-      // windowHeight: 0,
     };
   },
   validations: {
@@ -167,13 +163,7 @@ export default {
     this.$store.commit('OFFSET_TOP', 0);
     console.log('OFFSET_TOP - ', this.$store.getters.offsetTop);
   },
-  // beforeMount() {
-  //   this.windowHeight = window.innerHeight;
-  // },
   methods: {
-    // removeInitialValue() {
-    //   this.textMail = '';
-    // },
     onScroll(e) {
       console.log('onScroll');
       this.$store.commit('OFFSET_TOP', e.target.scrollTop);
