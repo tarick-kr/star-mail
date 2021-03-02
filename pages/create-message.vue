@@ -206,7 +206,7 @@ export default {
   .wrapper-main
     #scrollWrapper
       max-height: calc(100vh - 64px)
-      padding-top: 50px
+      padding-top: 90px
     #scrollWrapper::-webkit-scrollbar
       width: 0
 
