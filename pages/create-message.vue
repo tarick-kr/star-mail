@@ -205,7 +205,7 @@ export default {
   @media screen and (max-width: 600px)
     .wrapper-main
       #scrollWrapper
-        max-height: calc(100vh - 64px)
+        max-height: none
 
   .form-admins
     width: fit-content
