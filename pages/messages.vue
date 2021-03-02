@@ -99,12 +99,10 @@ export default {
   created() {
     // При изменении OFFSET_TOP у AppToolbar появится тень
     this.$store.commit('OFFSET_TOP', 0);
-    console.log('OFFSET_TOP - ', this.$store.getters.offsetTop);
     this.fetchMessages();
   },
   methods: {
     onScroll(e) {
-      console.log('onScroll');
       this.$store.commit('OFFSET_TOP', e.target.scrollTop);
     },
     async fetchMessages() {

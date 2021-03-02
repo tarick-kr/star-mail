@@ -14,7 +14,7 @@
           v-scroll:#scrollWrapper="onScroll"
         >
           <div class="pt-3 pb-3 title-page">
-            <h2>Создание рассылки</h2>
+            <h2>Создание сообщения</h2>
           </div>
           <v-divider
             dark
@@ -24,31 +24,10 @@
             class="form-admins"
             @submit.prevent="submit"
           >
-            <div class="d-flex">
-              <h2 class="subtitle-1 font-weight-bold">
-                Укажите адреса получателей:
-              </h2>
-              <v-tooltip
-                :right="windowWidth >= 760"
-                :top="windowWidth < 760"
-                attach="#scrollWrapper"
-                content-class="tooltip-style"
-              >
-                <template #activator="{ on, attrs }">
-                  <v-icon
-                    class="tooltip-icon"
-                    medium
-                    dark
-                    right
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    mdi-information-outline
-                  </v-icon>
-                </template>
-                <span>Email адреса следует вводить через запятую</span>
-              </v-tooltip>
-            </div>
+            <h2 class="subtitle-1 font-weight-bold">
+              Укажите адрес получателя:
+            </h2>
+
             <v-text-field
               v-model="email"
               dark
@@ -70,16 +49,18 @@
               @input="$v.subject.$touch()"
               @blur="$v.subject.$touch()"
             />
-            <h2
-              class="subtitle-1 mt-4 font-weight-bold"
-              :class="textErrorEditor ? 'error-modification-title' : ''"
-            >
-              Содержание письма:
-            </h2>
-            <div :class="textErrorEditor ? 'error-emergence-hint-on' : 'error-emergence-hint-off'">
-              <p class="error-description-hint">
-                {{ textErrorEditor }}
-              </p>
+            <div class="wrapper-error-editor">
+              <h2
+                class="subtitle-1 mt-4 font-weight-bold pb-6"
+                :class="textErrorEditor ? 'error-modification-title' : ''"
+              >
+                Содержание письма:
+              </h2>
+              <div :class="textErrorEditor ? 'error-emergence-hint-on' : 'error-emergence-hint-off'">
+                <p class="error-description-hint">
+                  {{ textErrorEditor }}
+                </p>
+              </div>
             </div>
             <div>
               <editor
@@ -101,8 +82,7 @@
                     'alignright alignjustify',
                 }"
                 @input="$v.textMail.$touch()"
-                @onClick="removeInitialValue"
-                @onFocus="removeInitialValue"
+                @blur="$v.textMail.$touch()"
               />
             </div>
             <div class="btn-line">
@@ -128,9 +108,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, email } from 'vuelidate/lib/validators';
-import { API_KEY_TINYMCE } from '@/server/keys';
 import Editor from '@tinymce/tinymce-vue';
-// import AppHelpImage from '@/components/create-message/AppHelpImage';
 
 export default {
   name: 'CreateMessagePage',
@@ -141,18 +119,15 @@ export default {
   middleware: ['auth'],
   data() {
     return {
-      apiKeyTinyMce: API_KEY_TINYMCE,
       email: '',
       subject: '',
+      textMail: '',
       loading: false,
       windowWidth: 0,
     };
   },
   validations: {
-    email: {
-      required,
-      email,
-    },
+    email: { required, email },
     subject: { required },
     textMail: { required },
   },
@@ -162,7 +137,7 @@ export default {
       if (!this.$v.email.$dirty) {
         return errors;
       }
-      !this.$v.email.email && errors.push('Введите правильный E-mail');
+      !this.$v.email.email && errors.push('Введите корректный email');
       !this.$v.email.required && errors.push('Поле не может быть пустым');
       return errors;
     },
@@ -192,38 +167,54 @@ export default {
   created() {
     // При изменении OFFSET_TOP у AppToolbar появится тень
     this.$store.commit('OFFSET_TOP', 0);
-    console.log('OFFSET_TOP - ', this.$store.getters.offsetTop);
   },
   mounted() {
     this.windowWidth = window.innerWidth;
   },
   methods: {
     onScroll(e) {
-      console.log('onScroll');
       this.$store.commit('OFFSET_TOP', e.target.scrollTop);
     },
+    onResize() {
+      this.windowWidth = window.innerWidth;
+    },
+
+    // checkEmails() {
+    //   const arrayEmails = this.emails.split(',');
+    //   const valid = arrayEmails.every((email) => this.validateEmail(email));
+    //   this.emailsValid = valid;
+    //   valid ? this.usersEmails = arrayEmails : this.usersEmails = [];
+    // },
+    // validateEmail(email) {
+    //   const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    //   return reg.test(String(email).toLowerCase());
+    // },
+
+    // createArrayEmails() {
+    //   this.emails = this.emails.split(',');
+    // },
+
     async submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.loading = true;
+        // this.loading = true;
         const messageData = {
           date: Date.now(),
           email: this.email,
           subject: this.subject,
           textMail: this.textMail,
         };
+        console.log(messageData);
         try {
-          await this.$store.dispatch('adminMailing/MAILING_START', messageData);
-          await this.$router.push('/api/v1/send?message=send-ok');
-          this.loading = false;
+          // await this.$store.dispatch('adminMailing/MAILING_START', messageData);
+          // this.loading = false;
+          // await this.$router.push('/messages');
         } catch (e) {
-          this.loading = false;
+          // this.loading = false;
         }
       }
     },
-    onResize() {
-      this.windowWidth = window.innerWidth;
-    },
+
   },
 };
 </script>
@@ -241,13 +232,6 @@ export default {
         width: fit-content
         min-width: 800px
         margin-left: 25px
-        .error-description-hint
-          font-size: 12px
-          color: #ff5252
-
-        .error-emergence-hint-on
-          animation: .2s ease-in-out both fade-in
-
         .btn-line
           display: flex
           justify-content: space-between
@@ -256,23 +240,63 @@ export default {
           .btn-action
             margin-right: -16px
 
-  // Стили для всплывающей подсказки
-  .wrapper-main
-    #scrollWrapper
-      .tooltip-style
-        color: #FFAD00
-        border: 1px solid #FFAD00
-        background: rgba(34, 73, 85, .95)
-        opacity: 0.95!important
-      .form-admins
-        .tooltip-icon
-          &:hover
-            color: #FFAD00
-
   // Скрытие скролла
   .wrapper-main
     #scrollWrapper::-webkit-scrollbar
       width: 0
+
+  .wrapper-main
+    #scrollWrapper
+      .form-admins
+        .wrapper-error-editor
+          position: relative
+          .error-description-hint
+            font-size: 12px
+            color: #ff5252
+            position: absolute
+            bottom: 6px
+            left: 0
+            margin: 0
+
+  // Появление и исчезновение ошибки у Editor`a
+  .wrapper-main
+    #scrollWrapper
+      .form-admins
+        .wrapper-error-editor
+          .error-modification-title
+            color: #ff5252
+            animation-name: shake
+            animation-duration: 0.2s
+            animation-fill-mode: both
+            animation-timing-function: ease-out
+          @keyframes shake
+            0%, 100%
+              transform: translateX(0)
+            10%, 50%, 90%
+              transform: translateX(-2px)
+            30%, 70%
+              transform: translateX(2px)
+          .error-emergence-hint-on
+            animation: .2s ease-in-out both fade-in
+          @keyframes fade-in
+            0%
+              opacity: 0
+              transform: scaleY(0)
+            100%
+              opacity: 1
+              transform: scaleY(1)
+
+          .error-emergence-hint-off
+            animation: .2s ease-in-out both fade-in reverse
+          //@keyframes fade-out
+          //  0%
+          //    opacity: 1
+          //    transform: scaleY(1)
+          //  100%
+          //    opacity: 0
+          //    transform: scaleY(0)
+
+  // ==================================================
 
   .wrapper-main
     #scrollWrapper
@@ -434,37 +458,4 @@ export default {
           ::v-deep.tox.tox-tinymce.tox-platform-touch
             max-width: 300px
 
-  //@keyframes fade-in
-  //  0%
-  //    opacity: 0
-  //    transform: scaleY(0)
-  //  100%
-  //    opacity: 1
-  //    transform: scaleY(1)
-  //
-  //.error-emergence-hint-off
-  //  animation: .2s ease-in-out both fade-out
-  //
-  //@keyframes fade-out
-  //  0%
-  //    opacity: 1
-  //    transform: scaleY(1)
-  //  100%
-  //    opacity: 0
-  //    transform: scaleY(0)
-  //
-  //.error-modification-title
-  //  color: #ff5252
-  //  animation-name: shake
-  //  animation-duration: 0.2s
-  //  animation-fill-mode: both
-  //  animation-timing-function: ease-out
-  //
-  //@keyframes shake
-  //  0%, 100%
-  //    transform: translateX(0)
-  //  10%, 50%, 90%
-  //    transform: translateX(-2px)
-  //  30%, 70%
-  //    transform: translateX(2px)
 </style>
