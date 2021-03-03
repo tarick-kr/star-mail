@@ -13,7 +13,21 @@ export const actions = {
     const jwtData = jwtDecode(token) || {};
     const { userId } = jwtData;
     try {
-      return await this.$axios.$get(`/api/v1/message/fetch/${userId}`);
+      return await this.$axios.$get(`/api/v1/message/fetch-all/${userId}`);
+    } catch (e) {
+      const message = {
+        text: e.response.data.message,
+        color: '#F57F17',
+      };
+      commit('SET_MESSAGE', message, { root: true });
+      throw e;
+    }
+  },
+
+  async FETCH_MESSAGES_BY_ID({ commit }, messageId) {
+    console.log('action FETCH_MESSAGES_BY_ID messageId - ', messageId);
+    try {
+      return await this.$axios.$get(`/api/v1/message/fetch-one/${messageId}`);
     } catch (e) {
       const message = {
         text: e.response.data.message,

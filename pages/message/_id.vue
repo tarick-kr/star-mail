@@ -34,22 +34,21 @@
             />
 
             <v-card-title class="title pb-2">
-              Какое-то название
+              {{ message.subject }}
             </v-card-title>
             <div class="d-flex justify-space-between">
               <v-card-subtitle class="subtitle-1 pt-0 pb-2">
-                pochta@mail.com
+                {{ message.email }}
               </v-card-subtitle>
               <v-card-subtitle class="subtitle-1 pt-0 pb-2">
-                21.02.21
+                {{ getDate(message.date) }}
               </v-card-subtitle>
             </div>
             <v-divider dark />
-            <v-card-text class="title">
-              Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же
-              постоянное информационно-пропагандистское обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское
-              обеспечение нашей. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей.
-            </v-card-text>
+            <v-card-text
+              class="title"
+              v-html="message.text"
+            />
           </v-card>
         </div>
       </transition>
@@ -59,15 +58,33 @@
 
 <script>
 
+import moment from 'moment';
+
 export default {
   name: 'MessageOne',
+  data: () => ({
+    message: '',
+    fetching: false,
+  }),
   created() {
     // При изменении OFFSET_TOP у AppToolbar появится тень
     this.$store.commit('OFFSET_TOP', 0);
+    this.fetchMessage();
+  },
+  mounted() {
+
   },
   methods: {
     onScroll(e) {
       this.$store.commit('OFFSET_TOP', e.target.scrollTop);
+    },
+    async fetchMessage() {
+      this.fetching = true;
+      this.message = await this.$store.dispatch('messages/FETCH_MESSAGES_BY_ID', this.$route.params.id);
+      this.fetching = false;
+    },
+    getDate(date) {
+      return moment(date).format('DD.MM.YY');
     },
   },
 

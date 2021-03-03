@@ -39,7 +39,7 @@
                           <v-list-item-subtitle v-html="item.textWithoutHtml" />
                         </v-list-item-content>
                         <v-list-item-action>
-                          <v-list-item-action-text v-text="item.date" />
+                          <v-list-item-action-text>{{ getDate(item.date) }}</v-list-item-action-text>
 
                           <v-btn
                             fab
@@ -81,6 +81,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import moment from 'moment';
 import AppLoader from '@/components/AppLoader';
 
 export default {
@@ -91,7 +92,6 @@ export default {
   middleware: ['auth'],
   data: () => ({
     messages: [],
-    messagesString: [],
     fetching: false,
   }),
   computed: {
@@ -114,8 +114,10 @@ export default {
     async fetchMessages() {
       this.fetching = true;
       this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES', this.token);
-      // this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES');
       this.fetching = false;
+    },
+    getDate(date) {
+      return moment(date).format('DD.MM.YY');
     },
   },
 };

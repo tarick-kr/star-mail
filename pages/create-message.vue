@@ -192,22 +192,6 @@ export default {
       // this.content = tinymce.get('text').getBody().innerHTML;
       // this.content = tinymce.get('editorBody').getContent({ format: 'text' });
     },
-
-    // checkEmails() {
-    //   const arrayEmails = this.emails.split(',');
-    //   const valid = arrayEmails.every((email) => this.validateEmail(email));
-    //   this.emailsValid = valid;
-    //   valid ? this.usersEmails = arrayEmails : this.usersEmails = [];
-    // },
-    // validateEmail(email) {
-    //   const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    //   return reg.test(String(email).toLowerCase());
-    // },
-
-    // createArrayEmails() {
-    //   this.emails = this.emails.split(',');
-    // },
-
     async submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {

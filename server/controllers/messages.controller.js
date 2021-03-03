@@ -33,4 +33,20 @@ module.exports.fetchMessages = async (req, res) => {
   }
 };
 
-module.exports.deleteMessage = async (req, res) => ({});
+module.exports.fetchMessage = async (req, res) => {
+  try {
+    const message = await Message.findById(req.params.messageId);
+    res.status(200).json(message);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+};
+
+module.exports.deleteMessage = (req, res) => ({
+  // try {
+  //   const message = await Message.findById(req.params.messageId);
+  //   res.status(200).json(message);
+  // } catch (e) {
+  //   res.status(500).json(e);
+  // }
+});
