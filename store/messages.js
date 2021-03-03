@@ -63,7 +63,6 @@ export const actions = {
   },
 
   async DELETE_MESSAGE({ commit }, messageId) {
-    console.log('action FETCH_MESSAGES_BY_ID messageId - ', messageId);
     try {
       return await this.$axios.$post(`/api/v1/message/delete/${messageId}`);
     } catch (e) {

@@ -168,4 +168,18 @@ export default {
       color: rgb(232, 108, 105) !important
       caret-color: rgb(232, 108, 105) !important
 
+    ::v-deep.text-field-conf.error--text,
+    ::v-deep.text-field-conf .error--text,
+    ::v-deep.text-field-conf.v-input--is-focused,
+    ::v-deep.text-field-conf .v-input--is-focused
+      .v-input__control
+        .v-input__slot
+          .v-text-field__slot
+            .v-label
+              top: 0
+              left: 0!important
+            .v-label.v-label--active
+              top: 0
+              left: -6px!important
+
 </style>
