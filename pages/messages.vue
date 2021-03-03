@@ -25,10 +25,9 @@
                   <template v-for="(item, index) in messages">
                     <v-list-item
                       :key="item._id"
-                      :to="`/message/${item._id}`"
                     >
                       <template #default="{ active }">
-                        <v-list-item-content>
+                        <v-list-item-content @click="openMessage(item._id)">
                           <v-list-item-title v-text="item.subject" />
 
                           <v-list-item-subtitle
@@ -45,6 +44,7 @@
                             fab
                             small
                             text
+                            @click.stop="deleteMessage(item._id)"
                           >
                             <v-icon
                               color="grey lighten-1"
@@ -118,6 +118,15 @@ export default {
     },
     getDate(date) {
       return moment(date).format('DD.MM.YY');
+    },
+    async deleteMessage(messageId) {
+      this.fetching = true;
+      await this.$store.dispatch('messages/DELETE_MESSAGE', messageId);
+      this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES', this.token);
+      this.fetching = false;
+    },
+    openMessage(id) {
+      this.$router.push(`/message/${id}`);
     },
   },
 };

@@ -10,7 +10,7 @@ const router = Router();
 // /api/v1/message/create
 router.post('/create', passport.authenticate('jwt', { session: false }), createMessage);
 // /api/v1/message/delete/id
-router.post('/delete', passport.authenticate('jwt', { session: false }), deleteMessage);
+router.post('/delete/:messageId', passport.authenticate('jwt', { session: false }), deleteMessage);
 // /api/v1/message/fetch/userId
 router.get('/fetch-all/:userId', passport.authenticate('jwt', { session: false }), fetchMessages);
 // /api/v1/message/fetch/messageId

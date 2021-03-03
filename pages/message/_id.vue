@@ -80,7 +80,7 @@ export default {
     },
     async fetchMessage() {
       this.fetching = true;
-      this.message = await this.$store.dispatch('messages/FETCH_MESSAGES_BY_ID', this.$route.params.id);
+      this.message = await this.$store.dispatch('messages/FETCH_MESSAGE_BY_ID', this.$route.params.id);
       this.fetching = false;
     },
     getDate(date) {
