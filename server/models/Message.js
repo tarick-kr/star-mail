@@ -15,6 +15,10 @@ const schema = new Schema({
     type: String,
     default: '',
   },
+  textWithoutHtml: {
+    type: String,
+    default: '',
+  },
   email: {
     type: String,
     default: '',
@@ -23,7 +27,7 @@ const schema = new Schema({
     type: Date,
     unique: false,
   },
-  user: {
+  userId: {
     type: ObjectId,
     ref: 'User',
   },

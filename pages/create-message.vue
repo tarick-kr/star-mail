@@ -68,6 +68,7 @@
                 api-key="uhxykia7elg30g9994dpwrw183c8xlvbzh8a23ta3igo19ng"
                 :error-messages="textMailErrors"
                 :init="{
+                  selector: '#editorBody',
                   statusbar: false,
                   placeholder: 'Введите текст сообщения...',
                   height: 250,
@@ -81,6 +82,7 @@
                     'bold italic | alignleft aligncenter ' +
                     'alignright alignjustify',
                 }"
+                @onChange="getContent"
                 @input="$v.textMail.$touch()"
                 @blur="$v.textMail.$touch()"
               />
@@ -109,6 +111,7 @@
 import { validationMixin } from 'vuelidate';
 import { required, email } from 'vuelidate/lib/validators';
 import Editor from '@tinymce/tinymce-vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'CreateMessagePage',
@@ -122,6 +125,7 @@ export default {
       email: '',
       subject: '',
       textMail: '',
+      textMailWithoutHtml: '',
       loading: false,
       windowWidth: 0,
     };
@@ -132,6 +136,9 @@ export default {
     textMail: { required },
   },
   computed: {
+    ...mapGetters({
+      token: 'auth/tokenUser',
+    }),
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) {
@@ -178,6 +185,13 @@ export default {
     onResize() {
       this.windowWidth = window.innerWidth;
     },
+    getContent(event, editor) {
+      this.textMailWithoutHtml = editor.getContent({ format: 'text' });
+      // const textMailWithoutHtml = editor.getContent({ format: 'text' });
+      // this.textMailWithoutHtml = textMailWithoutHtml.trim();
+      // this.content = tinymce.get('text').getBody().innerHTML;
+      // this.content = tinymce.get('editorBody').getContent({ format: 'text' });
+    },
 
     // checkEmails() {
     //   const arrayEmails = this.emails.split(',');
@@ -197,20 +211,21 @@ export default {
     async submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        // this.loading = true;
+        this.loading = true;
         const messageData = {
-          date: Date.now(),
-          email: this.email,
           subject: this.subject,
           textMail: this.textMail,
+          textMailWithoutHtml: this.textMailWithoutHtml,
+          email: this.email,
+          date: Date.now(),
+          token: this.token,
         };
-        console.log(messageData);
         try {
-          // await this.$store.dispatch('adminMailing/MAILING_START', messageData);
-          // this.loading = false;
-          // await this.$router.push('/messages');
+          await this.$store.dispatch('messages/CREATE_MESSAGE', messageData);
+          this.loading = false;
+          await this.$router.push('/messages');
         } catch (e) {
-          // this.loading = false;
+          this.loading = false;
         }
       }
     },

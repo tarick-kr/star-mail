@@ -32,10 +32,11 @@
                           <v-list-item-title v-text="item.subject" />
 
                           <v-list-item-subtitle
+                            class="mb-4"
                             v-text="item.email"
                           />
 
-                          <v-list-item-subtitle v-text="item.text" />
+                          <v-list-item-subtitle v-html="item.textWithoutHtml" />
                         </v-list-item-content>
                         <v-list-item-action>
                           <v-list-item-action-text v-text="item.date" />
@@ -90,10 +91,12 @@ export default {
   middleware: ['auth'],
   data: () => ({
     messages: [],
+    messagesString: [],
     fetching: false,
   }),
   computed: {
     ...mapGetters({
+      token: 'auth/tokenUser',
     }),
   },
   created() {
@@ -101,13 +104,17 @@ export default {
     this.$store.commit('OFFSET_TOP', 0);
     this.fetchMessages();
   },
+  mounted() {
+
+  },
   methods: {
     onScroll(e) {
       this.$store.commit('OFFSET_TOP', e.target.scrollTop);
     },
     async fetchMessages() {
       this.fetching = true;
-      this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES');
+      this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES', this.token);
+      // this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES');
       this.fetching = false;
     },
   },

@@ -10,6 +10,6 @@ router.post('/create', passport.authenticate('jwt', { session: false }), createM
 // /api/v1/message/delete/id
 router.post('/delete', passport.authenticate('jwt', { session: false }), deleteMessage);
 // /api/v1/message/fetch
-router.get('/fetch', passport.authenticate('jwt', { session: false }), fetchMessages);
+router.get('/fetch/:userId', passport.authenticate('jwt', { session: false }), fetchMessages);
 
 module.exports = router;
