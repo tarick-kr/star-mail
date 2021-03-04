@@ -14,7 +14,7 @@
           v-scroll:#scrollWrapper="onScroll"
         >
           <div class="pt-3 pb-3 title-page">
-            <h2>Создание сообщения</h2>
+            <h2>Создание рассылки</h2>
           </div>
           <v-divider
             dark
@@ -24,18 +24,39 @@
             class="form-admins"
             @submit.prevent="submit"
           >
-            <h2 class="subtitle-1 font-weight-bold">
-              Укажите адрес получателя:
-            </h2>
-
+            <div class="d-flex">
+              <h2 class="subtitle-1 font-weight-bold">
+                Укажите адреса получателей:
+              </h2>
+              <v-tooltip
+                :right="windowWidth >= 760"
+                :top="windowWidth < 760"
+                attach="#scrollWrapper"
+                content-class="tooltip-style"
+              >
+                <template #activator="{ on, attrs }">
+                  <v-icon
+                    class="tooltip-icon"
+                    medium
+                    dark
+                    right
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    mdi-information-outline
+                  </v-icon>
+                </template>
+                <span>Email адреса следует вводить через запятую</span>
+              </v-tooltip>
+            </div>
             <v-text-field
-              v-model="email"
+              v-model="emails"
               dark
-              :error-messages="emailErrors"
+              :error-messages="emailsErrors"
               label="Email"
               required
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              @input="$v.emails.$touch()"
+              @blur="$v.emails.$touch()"
             />
             <h2 class="subtitle-1 mt-4 font-weight-bold">
               Укажите тему письма:
@@ -109,9 +130,13 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, email } from 'vuelidate/lib/validators';
+import { required, helpers } from 'vuelidate/lib/validators';
 import Editor from '@tinymce/tinymce-vue';
 import { mapGetters } from 'vuex';
+
+const { checkEmails } = require('@/validators');
+
+const arrEmails = (value) => !helpers.req(value) || checkEmails(value);
 
 export default {
   name: 'CreateMessagePage',
@@ -122,7 +147,7 @@ export default {
   middleware: ['auth'],
   data() {
     return {
-      email: '',
+      emails: '',
       subject: '',
       textMail: '',
       textMailWithoutHtml: '',
@@ -131,7 +156,7 @@ export default {
     };
   },
   validations: {
-    email: { required, email },
+    emails: { required, arrEmails },
     subject: { required },
     textMail: { required },
   },
@@ -139,13 +164,13 @@ export default {
     ...mapGetters({
       token: 'auth/tokenUser',
     }),
-    emailErrors() {
+    emailsErrors() {
       const errors = [];
-      if (!this.$v.email.$dirty) {
+      if (!this.$v.emails.$dirty) {
         return errors;
       }
-      !this.$v.email.email && errors.push('Введите корректный email');
-      !this.$v.email.required && errors.push('Поле не может быть пустым');
+      !this.$v.emails.arrEmails && errors.push('Введите все email корректно');
+      !this.$v.emails.required && errors.push('Поле не может быть пустым');
       return errors;
     },
     subjectErrors() {
@@ -187,11 +212,11 @@ export default {
     },
     getContent(event, editor) {
       this.textMailWithoutHtml = editor.getContent({ format: 'text' });
-      // const textMailWithoutHtml = editor.getContent({ format: 'text' });
-      // this.textMailWithoutHtml = textMailWithoutHtml.trim();
-      // this.content = tinymce.get('text').getBody().innerHTML;
-      // this.content = tinymce.get('editorBody').getContent({ format: 'text' });
     },
+    makeArrayEmails(emailsString) {
+      return emailsString.split(',');
+    },
+
     async submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
@@ -200,12 +225,14 @@ export default {
           subject: this.subject,
           textMail: this.textMail,
           textMailWithoutHtml: this.textMailWithoutHtml,
-          email: this.email,
+          emailsArray: this.makeArrayEmails(this.emails),
+          emailsString: this.emails,
           date: Date.now(),
           token: this.token,
         };
         try {
-          await this.$store.dispatch('messages/CREATE_MESSAGE', messageData);
+          // await this.$store.dispatch('messages/CREATE_MESSAGE', messageData);
+          await this.$store.dispatch('messages/SEND_MESSAGE', messageData);
           this.loading = false;
           await this.$router.push('/messages');
         } catch (e) {
@@ -213,12 +240,12 @@ export default {
         }
       }
     },
-
   },
 };
 </script>
 
 <style scoped lang="sass">
+  @import "assets/variables"
 
   .wrapper-main
     #scrollWrapper
@@ -251,11 +278,24 @@ export default {
           position: relative
           .error-description-hint
             font-size: 12px
-            color: #ff5252
+            color: $error-color
             position: absolute
             bottom: 6px
             left: 0
             margin: 0
+
+  // Стили для всплывающей подсказки
+  .wrapper-main
+    #scrollWrapper
+      .tooltip-style
+        color: #FFAD00
+        border: 1px solid #FFAD00
+        background: rgba(34, 73, 85, .95)
+        opacity: 0.95!important
+      .form-admins
+        .tooltip-icon
+          &:hover
+            color: #FFAD00
 
   // Появление и исчезновение ошибки у Editor`a
   .wrapper-main
@@ -263,7 +303,7 @@ export default {
       .form-admins
         .wrapper-error-editor
           .error-modification-title
-            color: #ff5252
+            //color: $error-color
             animation-name: shake
             animation-duration: 0.2s
             animation-fill-mode: both

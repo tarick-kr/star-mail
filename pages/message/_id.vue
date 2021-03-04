@@ -38,7 +38,7 @@
             </v-card-title>
             <div class="d-flex justify-space-between">
               <v-card-subtitle class="subtitle-1 pt-0 pb-2">
-                {{ message.email }}
+                {{ message.emailsString }}
               </v-card-subtitle>
               <v-card-subtitle class="subtitle-1 pt-0 pb-2">
                 {{ getDate(message.date) }}

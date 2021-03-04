@@ -32,7 +32,7 @@
 
                           <v-list-item-subtitle
                             class="mb-4"
-                            v-text="item.email"
+                            v-text="item.emailsString"
                           />
 
                           <v-list-item-subtitle v-html="item.textWithoutHtml" />

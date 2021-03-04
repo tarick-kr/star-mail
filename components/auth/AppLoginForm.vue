@@ -165,13 +165,15 @@ export default {
   .form-wrapper
     ::v-deep.text-field-conf.error--text,
     ::v-deep.text-field-conf .error--text
-      color: rgb(232, 108, 105) !important
-      caret-color: rgb(232, 108, 105) !important
+      color: $error-color!important
+      caret-color: $error-color!important
 
     ::v-deep.text-field-conf.error--text,
     ::v-deep.text-field-conf .error--text,
     ::v-deep.text-field-conf.v-input--is-focused,
-    ::v-deep.text-field-conf .v-input--is-focused
+    ::v-deep.text-field-conf .v-input--is-focused,
+    ::v-deep.text-field-conf.v-input--is-label-active,
+    ::v-deep.text-field-conf .v-input--is-label-active
       .v-input__control
         .v-input__slot
           .v-text-field__slot

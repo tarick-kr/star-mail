@@ -19,7 +19,11 @@ const schema = new Schema({
     type: String,
     default: '',
   },
-  email: {
+  emailsArray: {
+    type: Array,
+    default: () => [],
+  },
+  emailsString: {
     type: String,
     default: '',
   },

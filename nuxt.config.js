@@ -82,7 +82,7 @@ module.exports = {
           // secondary: colors.amber.darken3,
           // info: colors.teal.lighten1,
           // warning: '#E53935',
-          error: '#e86c69',
+          error: '#fd7171',
           success: '#00E676',
         },
         dark: {
@@ -91,7 +91,7 @@ module.exports = {
           // secondary: colors.amber.darken3,
           // info: colors.teal.lighten1,
           // warning: '#E53935',
-          error: '#e86c69',
+          error: '#fd7171',
           success: '#00E676',
         },
       },
