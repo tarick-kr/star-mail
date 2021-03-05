@@ -34,9 +34,9 @@ module.exports.sendMessage = async (req, res) => {
         <table cellspacing="0" cellpadding="0" style="background:#224955;width:760px;font-family:arial;color:#fff;border-spacing:0;border-collapse:collapse;border:1px solid #ccc;margin-left: auto; margin-right:auto;">
           <tr>
             <td>
-              <table cellspacing="0" cellpadding="0" style="background:#224955;width:100%;border-spacing: 0;border-collapse:collapse;">
+              <table cellspacing="0" cellpadding="0" style="background:#224955;width:100%;border-spacing: 0;border-collapse:collapse; align="center"">
                 <tr>
-                  <td style="padding: 20px 50px 20px 50px;">
+                  <td align="center" style="padding: 20px 50px 20px 50px;">
                     <img src="https://s-tar-mail.herokuapp.com/app_logo_0.5.png" alt="app_logo" width="145" height="30" />
                   </td>
                 </tr>
