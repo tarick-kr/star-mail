@@ -16,8 +16,8 @@ module.exports.fetchMessage = async (req, res) => {
     const message = await Message.findById(req.params.messageId);
     res.status(200).json(message);
   } catch (e) {
-    // res.status(500).json({ e, message: 'Такая рассылка не найдена' });
-    res.status(500).json({ message: 'Такая рассылка не найдена' });
+    res.status(500).json(e);
+    // res.status(500).json({ message: 'Такая рассылка не найдена' });
   }
 };
 

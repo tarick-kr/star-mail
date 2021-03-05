@@ -3,10 +3,10 @@
 module.exports = {
   telemetry: false,
   head: {
-    titleTemplate: '%s - star-mail',
-    title: 'star-mail',
+    titleTemplate: `${process.env.npm_package_name} | %s`,
+    title: process.env.npm_package_name || '',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ru',
     },
     meta: [
       { charset: 'utf-8' },

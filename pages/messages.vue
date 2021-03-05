@@ -12,7 +12,7 @@
         <div v-scroll:#scrollWrapper="onScroll">
           <template v-if="!fetching">
             <div class="pt-6 px-5 pb-3">
-              <h2>Мои сообщения</h2>
+              <h2>Мои рассылки</h2>
             </div>
             <v-divider dark />
             <template v-if="messages.length > 0">
@@ -93,6 +93,9 @@ export default {
   data: () => ({
     messages: [],
     fetching: false,
+  }),
+  head: () => ({
+    title: 'Мои рассылки',
   }),
   computed: {
     ...mapGetters({

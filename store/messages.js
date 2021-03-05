@@ -13,7 +13,7 @@ export const actions = {
     } catch (e) {
       const message = {
         text: e.response.data.message,
-        color: '#F57F17',
+        status: 'warning',
       };
       commit('SET_MESSAGE', message, { root: true });
       throw e;
@@ -24,11 +24,7 @@ export const actions = {
     try {
       return await this.$axios.$get(`/api/v1/message/fetch-one/${messageId}`);
     } catch (e) {
-      // const message = {
-      //   text: e.response.data.message,
-      //   color: '#F57F17',
-      // };
-      // commit('SET_MESSAGE', message, { root: true });
+      console.log(e);
       throw e;
     }
   },
@@ -48,11 +44,10 @@ export const actions = {
     };
     try {
       await this.$axios.$post('/api/v1/message/send', dataMessage);
-      // commit('SAVE_MESSAGE', dataMessage);
     } catch (e) {
       const message = {
         text: e.response.data.message,
-        color: '#F57F17',
+        status: 'warning',
       };
       commit('SET_MESSAGE', message, { root: true });
       throw e;
@@ -65,7 +60,7 @@ export const actions = {
     } catch (e) {
       const message = {
         text: e.response.data.message,
-        color: '#F57F17',
+        status: 'warning',
       };
       commit('SET_MESSAGE', message, { root: true });
       throw e;
@@ -73,6 +68,4 @@ export const actions = {
   },
 };
 
-export const getters = {
-
-};
+export const getters = { };

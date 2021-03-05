@@ -90,6 +90,9 @@ export default {
     message: '',
     fetching: false,
   }),
+  head: () => ({
+    title: 'Сообщение',
+  }),
   created() {
     // При изменении OFFSET_TOP у AppToolbar появится тень
     this.$store.commit('OFFSET_TOP', 0);

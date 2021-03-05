@@ -19,33 +19,11 @@ import AppLoginForm from '@/components/auth/AppLoginForm';
 export default {
   name: 'LoginPage',
   components: {
-    // AppLoginForm: () => import('@/components/auth/AppLoginForm'),
     AppLoginForm,
   },
   layout: 'auth',
-  data: () => ({
-
+  head: () => ({
+    title: 'Вход',
   }),
-  // computed: {
-  //   ...mapGetters({
-  //     isAuthenticatedUser: 'auth/isAuthenticatedUser',
-  //   }),
-  // },
-  // created() {
-  //   if (this.isAuthenticatedUser) {
-  //     this.$router.push('/messages');
-  //   }
-  //   this.$store.commit('OFFSET_TOP', 0);
-  // },
-  // mounted() {
-  //   const { message } = this.$route.query;
-  //   if (message === 'login') {
-  //     const message = {
-  //       text: 'Для начала войдите или зарегистрируйтесь',
-  //       color: '#F57F17',
-  //     };
-  //     this.$store.commit('SET_MESSAGE', message);
-  //   }
-  // },
 };
 </script>

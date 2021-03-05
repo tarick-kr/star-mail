@@ -279,7 +279,7 @@ export default {
       return [
         { divider: true },
         {
-          title: 'О сервисе',
+          title: 'О проекте',
           group: 'extra',
           icon: 'mdi-help-circle-outline',
           href: '/about',
@@ -340,6 +340,7 @@ export default {
         this.screenIcon = 'mdi-fullscreen';
       }
       Util.toggleFullScreen();
+      this.$store.commit('SET_STATE_DRAWER', false);
     },
     closeDrawer() {
       // if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {

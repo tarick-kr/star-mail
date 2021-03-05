@@ -14,16 +14,6 @@ function isJWTValid(token) {
   return false;
 }
 
-// function getMessagesIdsFromCookies() {
-//   const cookiesStr = process.browser ? document.cookie : this.app.context.req.headers.cookie;
-//   const cookies = Cookie.parse(cookiesStr || '') || {};
-//   const token = cookies['jwt-token'];
-//   const jwtData = jwtDecode(token) || {};
-//   console.log('jwtData - ', jwtData);
-//   const { messagesIds } = jwtData;
-//   console.log('messagesIds - ', messagesIds);
-// }
-
 export const state = () => ({
   tokenUser: null,
 });
@@ -45,7 +35,7 @@ export const actions = {
     } catch (e) {
       const message = {
         text: e.response.data.message,
-        color: '#F57F17',
+        status: 'warning',
       };
       commit('SET_MESSAGE', message, { root: true });
       throw e;
@@ -55,11 +45,10 @@ export const actions = {
     try {
       const token = await this.$axios.$post('/api/v1/auth/login', formData);
       dispatch('SET_TOKEN_USER', token);
-      // getMessagesIdsFromCookies(token);
     } catch (e) {
       const message = {
         text: e.response.data.message,
-        color: '#F57F17',
+        status: 'warning',
       };
       commit('SET_MESSAGE', message, { root: true });
       throw e;

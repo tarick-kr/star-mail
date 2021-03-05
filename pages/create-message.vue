@@ -50,7 +50,7 @@
               </v-tooltip>
             </div>
             <v-text-field
-              v-model="emails"
+              v-model.trim="emails"
               dark
               :error-messages="emailsErrors"
               label="Email"
@@ -62,7 +62,7 @@
               Укажите тему письма:
             </h2>
             <v-text-field
-              v-model="subject"
+              v-model.trim="subject"
               dark
               :error-messages="subjectErrors"
               label="Тема"
@@ -155,6 +155,9 @@ export default {
       windowWidth: 0,
     };
   },
+  head: () => ({
+    title: 'Создание рассылки',
+  }),
   validations: {
     emails: { required, arrEmails },
     subject: { required },

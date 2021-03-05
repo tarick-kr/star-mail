@@ -20,7 +20,9 @@ export default {
     AppRegistrForm,
   },
   layout: 'auth',
-
+  head: () => ({
+    title: 'Регистрация',
+  }),
 };
 </script>
 

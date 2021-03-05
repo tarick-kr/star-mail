@@ -13,7 +13,7 @@
           </div>
           <hr class="mx-3 my-5">
           <h2>
-            к сожалению, {{ userName }} такая страница не найдена
+            К сожалению, {{ userName }}, такая страница не найдена
           </h2>
           <NuxtLink
             to="/messages"
@@ -38,19 +38,12 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {
-      // pageNotFound: '404 Страница не найдена',
-      userName: '',
-    };
-  },
-  head() {
-    // const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError;
-    const title = '404 Страница не найдена';
-    return {
-      title,
-    };
-  },
+  data: () => ({
+    userName: '',
+  }),
+  head: () => ({
+    title: '404 Страница не найдена',
+  }),
   computed: {
     ...mapGetters({
       token: 'auth/tokenUser',

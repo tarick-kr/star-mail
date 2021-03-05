@@ -63,8 +63,8 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'About',
-  data: () => ({
-
+  head: () => ({
+    title: 'О проекте',
   }),
   computed: {
     ...mapGetters({
