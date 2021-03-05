@@ -17,6 +17,7 @@ export default function ({ $axios, redirect, store }) {
         store.dispatch('auth/LOGOUT_USER');
       }
       if (error.response.status === 500) {
+        redirect('/error');
         console.error('Server 500 error');
       }
     }

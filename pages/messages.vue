@@ -105,11 +105,16 @@ export default {
     this.fetchMessages();
   },
   mounted() {
-
+    this.checkStateDrawer();
   },
   methods: {
     onScroll(e) {
       this.$store.commit('OFFSET_TOP', e.target.scrollTop);
+    },
+    checkStateDrawer() {
+      if (window.innerWidth >= 600 && window.innerWidth < 1264 && !this.drawerMini) {
+        this.$store.commit('SET_STATE_DRAWER_MINI', true);
+      }
     },
     async fetchMessages() {
       this.fetching = true;

@@ -72,7 +72,7 @@
           mdi-border-color
         </v-icon>
         <span class="drawer-btn-text">
-          написать
+          создать
         </span>
       </v-btn>
       <v-btn
@@ -239,31 +239,31 @@ export default {
     drawerMenuTop() {
       return [
         {
-          title: 'Сообщения',
-          icon: 'mdi-email',
+          title: 'Мои рассылки',
+          icon: 'mdi-email-send',
           name: 'Messages',
           href: '/messages',
         },
-        {
-          title: 'Шаблоны',
-          icon: 'mdi-view-dashboard-variant',
-          name: 'Users',
-          href: '/templates',
-        },
+        // {
+        //   title: 'Шаблоны',
+        //   icon: 'mdi-view-dashboard-variant',
+        //   name: 'Users',
+        //   href: '/templates',
+        // },
         {
           title: 'Разделитель-1',
           divider: true,
         },
-        {
-          title: 'Профиль',
-          icon: 'mdi-account-cog',
-          name: 'Profile',
-          href: '/profile',
-        },
-        {
-          title: 'Разделитель-2',
-          divider: true,
-        },
+        // {
+        //   title: 'Профиль',
+        //   icon: 'mdi-account-cog',
+        //   name: 'Profile',
+        //   href: '/profile',
+        // },
+        // {
+        //   title: 'Разделитель-2',
+        //   divider: true,
+        // },
         {
           title: 'fullscreen',
           click: true,

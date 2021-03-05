@@ -18,7 +18,7 @@
           </div>
           <v-divider
             dark
-            class="title-page"
+            class="title-page divider"
           />
           <form
             class="form-admins"
@@ -163,6 +163,7 @@ export default {
   computed: {
     ...mapGetters({
       token: 'auth/tokenUser',
+      drawerMini: 'stateDrawerMini',
     }),
     emailsErrors() {
       const errors = [];
@@ -202,6 +203,7 @@ export default {
   },
   mounted() {
     this.windowWidth = window.innerWidth;
+    this.checkStateDrawer();
   },
   methods: {
     onScroll(e) {
@@ -209,6 +211,11 @@ export default {
     },
     onResize() {
       this.windowWidth = window.innerWidth;
+    },
+    checkStateDrawer() {
+      if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
+        this.$store.commit('SET_STATE_DRAWER_MINI', true);
+      }
     },
     getContent(event, editor) {
       this.textMailWithoutHtml = editor.getContent({ format: 'text' });
@@ -458,6 +465,8 @@ export default {
           margin-left: 20px
         .form-admins
           margin-left: 20px
+        .title-page.divider
+          margin-bottom: 10px
 
   @media screen and (max-width: 500px)
     .wrapper-main
