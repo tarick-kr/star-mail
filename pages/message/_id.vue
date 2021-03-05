@@ -32,21 +32,45 @@
               dark
               class="hidden-sm-and-up"
             />
-
-            <v-card-title class="title pb-2">
-              {{ message.subject }}
-            </v-card-title>
-            <div class="d-flex justify-space-between">
-              <v-card-subtitle class="subtitle-1 pt-0 pb-2">
-                {{ message.emailsString }}
-              </v-card-subtitle>
-              <v-card-subtitle class="subtitle-1 pt-0 pb-2">
+            <div class="d-flex justify-space-between align-center">
+              <v-card-title class="message-subject">
+                {{ message.subject }}
+              </v-card-title>
+              <v-card-title class="message-date">
                 {{ getDate(message.date) }}
-              </v-card-subtitle>
+              </v-card-title>
             </div>
+            <v-expansion-panels
+              flat
+              accordion
+            >
+              <v-expansion-panel>
+                <v-expansion-panel-header
+                  color="#224955"
+                >
+                  Получатели
+                  <template #actions>
+                    <v-icon
+                      color="#FFFFFF"
+                      medium
+                    >
+                      mdi-chevron-down
+                    </v-icon>
+                  </template>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content
+                  color="#224955"
+                >
+                  <p>
+                    {{ message.emailsString }}
+                  </p>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+
             <v-divider dark />
             <v-card-text
-              class="title"
+              class="message-text"
               v-html="message.text"
             />
           </v-card>
@@ -99,6 +123,14 @@ export default {
       .card-message
         max-width: 70%
         margin-left: 48px
+        .message-subject
+          font-size: 18px
+        .message-date
+          font-size: 14px
+        .message-text
+          padding: 20px 8px 8px
+          font-size: 18px
+          color: #fafafa
     #scrollWrapper::-webkit-scrollbar
       width: 0
 
