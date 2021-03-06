@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import AppDrawer from '@/components/AppDrawer';
-import AppToolbar from '@/components/AppToolbar';
+import AppDrawer from '@/components/common/AppDrawer';
+import AppToolbar from '@/components/common/AppToolbar';
 import { mapGetters } from 'vuex';
 
 export default {

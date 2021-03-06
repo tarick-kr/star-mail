@@ -18,7 +18,7 @@ module.exports = {
     ],
   },
 
-  loading: { color: '#FFEB3B' },
+  loading: { color: '#FFAD00' },
 
   css: [
     '@/theme/index.sass',
@@ -75,26 +75,26 @@ module.exports = {
     },
     theme: {
       light: true,
-      themes: {
-        light: {
-          primary: '#224955',
-          accent: '#FFAD00',
-          // secondary: colors.amber.darken3,
-          // info: colors.teal.lighten1,
-          // warning: '#E53935',
-          error: '#fd7171',
-          success: '#00E676',
-        },
-        dark: {
-          primary: '#224955',
-          accent: '#FFAD00',
-          // secondary: colors.amber.darken3,
-          // info: colors.teal.lighten1,
-          // warning: '#E53935',
-          error: '#fd7171',
-          success: '#00E676',
-        },
-      },
+      // themes: {
+      //   light: {
+      //     primary: '#224955',
+      //     accent: '#FFAD00',
+      //     // secondary: colors.amber.darken3,
+      //     // info: colors.teal.lighten1,
+      //     // warning: '#E53935',
+      //     error: '#fd7171',
+      //     success: '#00E676',
+      //   },
+      //   dark: {
+      //     primary: '#224955',
+      //     accent: '#FFAD00',
+      //     // secondary: colors.amber.darken3,
+      //     // info: colors.teal.lighten1,
+      //     // warning: '#E53935',
+      //     error: '#fd7171',
+      //     success: '#00E676',
+      //   },
+      // },
     },
   },
 

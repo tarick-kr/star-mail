@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import AppToolbarBtn from '@/components/AppToolbarBtn';
+import AppToolbarBtn from '@/components/common/AppToolbarBtn';
 import { mapGetters } from 'vuex';
 
 export default {

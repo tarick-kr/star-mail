@@ -16,53 +16,10 @@
             </div>
             <v-divider dark />
             <template v-if="messages.length > 0">
-              <v-list
-                two-line
-                dark
-                color="#224955"
-              >
-                <v-list-item-group>
-                  <template v-for="(item, index) in messages">
-                    <v-list-item
-                      :key="item._id"
-                    >
-                      <template #default="{ active }">
-                        <v-list-item-content @click="openMessage(item._id)">
-                          <v-list-item-title v-text="item.subject" />
-
-                          <v-list-item-subtitle
-                            class="mb-4"
-                            v-text="item.emailsString"
-                          />
-
-                          <v-list-item-subtitle v-html="item.textWithoutHtml" />
-                        </v-list-item-content>
-                        <v-list-item-action>
-                          <v-list-item-action-text>{{ getDate(item.date) }}</v-list-item-action-text>
-
-                          <v-btn
-                            fab
-                            small
-                            text
-                            @click.stop="deleteMessage(item._id)"
-                          >
-                            <v-icon
-                              color="grey lighten-1"
-                            >
-                              mdi-delete-forever
-                            </v-icon>
-                          </v-btn>
-                        </v-list-item-action>
-                      </template>
-                    </v-list-item>
-
-                    <v-divider
-                      v-if="index < messages.length - 1"
-                      :key="index"
-                    />
-                  </template>
-                </v-list-item-group>
-              </v-list>
+              <AppListMessages
+                :messages="messages"
+                @remove="deleteMessage"
+              />
             </template>
             <template v-else>
               <div class="pt-6 px-5 pb-3">
@@ -81,13 +38,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import moment from 'moment';
-import AppLoader from '@/components/AppLoader';
+import AppLoader from '@/components/common/AppLoader';
+import AppListMessages from '@/components/messages/AppListMessages';
 
 export default {
   name: 'MessagesPage',
   components: {
     AppLoader,
+    AppListMessages,
   },
   middleware: ['auth'],
   data: () => ({
@@ -124,17 +82,11 @@ export default {
       this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES', this.token);
       this.fetching = false;
     },
-    getDate(date) {
-      return moment(date).format('DD.MM.YY');
-    },
-    async deleteMessage(messageId) {
+    async deleteMessage(e) {
       this.fetching = true;
-      await this.$store.dispatch('messages/DELETE_MESSAGE', messageId);
+      await this.$store.dispatch('messages/DELETE_MESSAGE', e);
       this.messages = await this.$store.dispatch('messages/FETCH_MESSAGES', this.token);
       this.fetching = false;
-    },
-    openMessage(id) {
-      this.$router.push(`/message/${id}`);
     },
   },
 };

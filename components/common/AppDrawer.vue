@@ -28,7 +28,7 @@
           class="center-flex w-100"
         >
           <img
-            :src="require('@/static/app_logo_accent.svg')"
+            :src="require('static/app_logo_accent.svg')"
             height="36"
             alt="Star Mail"
           >
@@ -44,7 +44,7 @@
           class="center-flex w-100"
         >
           <img
-            :src="require('@/static/app_logo_mini_accent.svg')"
+            :src="require('static/app_logo_mini_accent.svg')"
             height="36"
             alt="Star Mail"
           >
@@ -63,6 +63,7 @@
         large
         class="my-2 mx-6"
         to="/create-message"
+        @click="closeDrawer"
       >
         <v-icon
           left
@@ -105,6 +106,7 @@
             v-if="item.name"
             :key="item.title"
             :to="item.href ? item.href : null"
+            @click="closeDrawer"
           >
             <v-list-item-icon>
               <v-icon>
@@ -182,6 +184,7 @@
               :key="item.title"
               :to="item.href ? item.href : null"
               style="height: 64px;"
+              @click="closeDrawer"
             >
               <v-list-item-icon style="height: 32px;">
                 <v-icon>
@@ -343,9 +346,11 @@ export default {
       this.$store.commit('SET_STATE_DRAWER', false);
     },
     closeDrawer() {
-      // if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
-      //   this.$store.commit('SET_STATE_DRAWER_MINI', true)
-      // }
+      if (this.windowWidth < 600) {
+        this.$store.commit('SET_STATE_DRAWER', false);
+      } else if (this.windowWidth >= 600 && this.windowWidth < 1264 && !this.drawerMini) {
+        this.$store.commit('SET_STATE_DRAWER_MINI', true);
+      }
     },
   },
 };
