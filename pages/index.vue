@@ -10,7 +10,7 @@ export default {
   name: 'Index',
   layout: 'auth',
   head: () => ({
-    title: 'example',
+    title: 'Модуль рассылки админ-панели',
   }),
   computed: {
     ...mapGetters({
