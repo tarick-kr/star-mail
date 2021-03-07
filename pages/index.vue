@@ -10,7 +10,7 @@ export default {
   name: 'Index',
   layout: 'auth',
   head: () => ({
-    title: '',
+    title: 'example',
   }),
   computed: {
     ...mapGetters({
