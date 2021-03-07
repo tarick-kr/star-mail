@@ -4,7 +4,7 @@ module.exports = {
   telemetry: false,
   head: {
     titleTemplate: `${process.env.npm_package_name} | %s`,
-    title: process.env.npm_package_name || '',
+    title: 'Модуль рассылки админ-панели',
     htmlAttrs: {
       lang: 'ru',
     },

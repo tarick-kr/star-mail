@@ -9,9 +9,9 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Index',
   layout: 'auth',
-  head: () => ({
-    title: 'Модуль рассылки админ-панели',
-  }),
+  // head: () => ({
+  //   title: 'Модуль рассылки админ-панели',
+  // }),
   computed: {
     ...mapGetters({
       isAuthenticatedUser: 'auth/isAuthenticatedUser',
