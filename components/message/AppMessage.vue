@@ -32,6 +32,7 @@
     <v-expansion-panels
       flat
       accordion
+      class="addressees"
     >
       <v-expansion-panel>
         <v-expansion-panel-header
@@ -90,6 +91,8 @@ export default {
   .card-message
     max-width: 70%
     margin-left: 48px
+    .addressees
+      z-index: 0
     .message-subject
       font-size: 18px
       word-break: break-word
