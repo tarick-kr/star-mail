@@ -9,9 +9,9 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Index',
   layout: 'auth',
-  // beforeCreate() {
-  //   this.$router.push('/login');
-  // },
+  head: () => ({
+    title: '',
+  }),
   computed: {
     ...mapGetters({
       isAuthenticatedUser: 'auth/isAuthenticatedUser',
@@ -24,16 +24,6 @@ export default {
       this.$router.push('/login');
     }
     this.$store.commit('OFFSET_TOP', 0);
-  },
-  mounted() {
-    // const { message } = this.$route.query;
-    // if (message === 'login') {
-    //   const message = {
-    //     text: 'Для начала войдите или зарегистрируйтесь',
-    //     status: 'warning',
-    //   };
-    //   this.$store.commit('SET_MESSAGE', message);
-    // }
   },
 };
 </script>
