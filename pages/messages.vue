@@ -23,7 +23,7 @@
             </template>
             <template v-else>
               <div class="pt-6 px-5 pb-3">
-                <h3>Список сообщений пуст</h3>
+                <h3>Список рассылок пуст</h3>
               </div>
             </template>
           </template>

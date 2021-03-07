@@ -91,6 +91,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
+  @import "assets/variables"
 
   .wrapper-main
     #scrollWrapper
