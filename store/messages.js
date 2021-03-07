@@ -24,7 +24,7 @@ export const actions = {
     try {
       return await this.$axios.$get(`/api/v1/message/fetch-one/${messageId}`);
     } catch (e) {
-      console.log(e);
+      console.log('FETCH_MESSAGE_BY_ID - ', e);
       throw e;
     }
   },

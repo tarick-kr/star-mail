@@ -62,6 +62,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'About',
+  middleware: ['auth'],
   head: () => ({
     title: 'О проекте',
   }),

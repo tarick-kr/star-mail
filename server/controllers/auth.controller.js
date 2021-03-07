@@ -27,7 +27,7 @@ module.exports.loginUser = async (req, res) => {
         email: candidate.email,
         userId: candidate._id,
         userName: candidate.name,
-      }, keys.JWT, { expiresIn: 60 * 60 });
+      }, keys.JWT, { expiresIn: 60 });
       await res.status(200).json(token);
     } else {
       res.status(404).json({ message: 'Пользователь не найден. Введите правильный e-mail и пароль.' });

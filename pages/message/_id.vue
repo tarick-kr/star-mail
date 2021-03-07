@@ -26,6 +26,7 @@ export default {
   components: {
     AppMessage,
   },
+  middleware: ['auth'],
   data: () => ({
     message: {},
     fetching: false,
