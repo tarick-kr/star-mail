@@ -50,6 +50,7 @@ export default {
     }),
   },
   created() {
+    console.log('error - ', this.props);
     const jwtData = jwtDecode(this.token) || {};
     this.userName = jwtData.userName;
   },

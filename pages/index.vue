@@ -26,14 +26,14 @@ export default {
     this.$store.commit('OFFSET_TOP', 0);
   },
   mounted() {
-    const { message } = this.$route.query;
-    if (message === 'login') {
-      const message = {
-        text: 'Для начала войдите или зарегистрируйтесь',
-        color: '#F57F17',
-      };
-      this.$store.commit('SET_MESSAGE', message);
-    }
+    // const { message } = this.$route.query;
+    // if (message === 'login') {
+    //   const message = {
+    //     text: 'Для начала войдите или зарегистрируйтесь',
+    //     status: 'warning',
+    //   };
+    //   this.$store.commit('SET_MESSAGE', message);
+    // }
   },
 };
 </script>

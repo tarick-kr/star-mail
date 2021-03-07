@@ -9,7 +9,7 @@
 
     <template v-if="message">
       <v-snackbar
-        :timeout="3000000"
+        :timeout="3000"
         :color="message.color"
         value="true"
         @input="closeMessage"
